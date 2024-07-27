@@ -1,0 +1,19 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+[entry_point
+
+    [local my_local_array [array r:i32 7] [indeterminate_value]]
+
+    [for [local x r:i32 0][< x 7][+= x 1]
+        
+        [= [index_into my_local_array x] 7]
+        
+        [*= [index_into my_local_array x] x]
+
+        c:printf("%d\n" [index_into my_local_array x])
+
+    ] 
+
+]

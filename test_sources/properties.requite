@@ -1,0 +1,23 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+[object TestObject
+    [property x r:i32 {0}]
+
+    [constructor [arguments r:i32 x]
+    	c:printf("the constructor argument is %d\n" x)
+    	c:printf("the initial value of the property is %d\n" [this].x)
+        [= [this].x x]
+        c:printf("the value of the property is %d\n" [this].x)
+        c:puts("constructed!")
+    ]
+]
+
+[entry_point
+    c:puts("Hello, world!")
+    [local my_object TestObject {7}]
+    c:printf("the value of the property is %d\n" my_object.x)
+    [= my_object.x 8]
+    c:printf("the value of the property is %d\n" my_object.x)
+]

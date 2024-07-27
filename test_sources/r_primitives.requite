@@ -1,0 +1,155 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+[module r_primitives]
+
+[export_group r
+    [type_alias void [void]]
+    
+    [type_alias byte [byte]]
+
+    [type_alias bool [bool]]
+
+    [type_alias iptr [integer signed 64]] // TODO use pointer_size
+
+    [type_alias uptr [integer unsigned 64]] // TODO use pointer_size
+
+    [type_alias i8 [integer signed 8]]
+
+    [type_alias i16 [integer signed 16]]
+
+    [type_alias i32 [integer signed 32]]
+
+    [type_alias i64 [integer signed 64]]
+
+    [type_alias i128 [integer signed 128]]
+
+    [type_alias i256 [integer signed 256]]
+
+    [type_alias i512 [integer signed 512]]
+
+    [type_alias i1024 [integer signed 1024]]
+
+    [type_alias i2048 [integer signed 2048]]
+
+    [type_alias i4096 [integer signed 4096]]
+
+    [type_alias i8192 [integer signed 8192]]
+    
+    [type_alias i16384 [integer signed 16384]]
+
+    [type_alias i32768 [integer signed 32768]]
+
+    [type_alias i65536 [integer signed 65536]]
+
+    [type_alias i131072 [integer signed 131072]]
+
+    [type_alias i262144 [integer signed 262144]]
+
+    [type_alias i524288 [integer signed 524288]]
+
+    [type_alias i1048576 [integer signed 1048576]]
+
+    [type_alias i2097152 [integer signed 2097152]]
+
+    [type_alias i4194304 [integer signed 4194304]]
+
+    [type_alias i8388608 [integer signed 8388608]]
+
+    [type_alias u8 [integer unsigned 8]]
+
+    [type_alias u16 [integer unsigned 16]]
+
+    [type_alias u32 [integer unsigned 32]]
+
+    [type_alias u64 [integer unsigned 64]]
+
+    [type_alias u128 [integer unsigned 128]]
+
+    [type_alias u256 [integer unsigned 256]]
+
+    [type_alias u512 [integer unsigned 512]]
+
+    [type_alias u1024 [integer unsigned 1024]]
+
+    [type_alias u2048 [integer unsigned 2048]]
+
+    [type_alias u4096 [integer unsigned 4096]]
+
+    [type_alias u8192 [integer unsigned 8192]]
+    
+    [type_alias u16384 [integer unsigned 16384]]
+
+    [type_alias u32768 [integer unsigned 32768]]
+
+    [type_alias u65536 [integer unsigned 65536]]
+
+    [type_alias u131072 [integer unsigned 131072]]
+
+    [type_alias u262144 [integer unsigned 262144]]
+
+    [type_alias u524288 [integer unsigned 524288]]
+
+    [type_alias u1048576 [integer unsigned 1048576]]
+
+    [type_alias u2097152 [integer unsigned 2097152]]
+
+    [type_alias u4194304 [integer unsigned 4194304]]
+
+    [type_alias u8388608 [integer unsigned 8388608]]
+
+    [type_alias bf16 [floating_point brain]]
+
+    [type_alias f16 [floating_point binary_half]]
+
+    [type_alias f32 [floating_point binary_single]]
+
+    [type_alias f64 [floating_point binary_double]]
+
+    [type_alias f80 [floating_point x87_double_extended]]
+
+    [type_alias f128 [floating_point binary_quad]]
+
+    [type_alias pcc_double_double [floating_point pcc_double_double]]
+
+    [type_alias f8_em6m2 [floating_point float8_e6m2]]
+
+    [type_alias f8_e6m2fnuz [floating_point float8_e6m2fnuz]]
+
+    [type_alias f8_e4m3fn [floating_point float8_e4m3fn]]
+    
+    [type_alias f8_e4m3fnuz [floating_point float8_e4m3fnuz]]
+
+    [type_alias f8_e4m3b11fnuz [floating_point float8_4m3b11fnuz]]
+
+    [type_alias f_tf32 [floating_point float_tf32]]
+
+    [type_alias fixed_16_16 [fixed_point 16 16]]
+
+    [type_alias fixed_26_6 [fixed_point 26 6]]
+
+    [type_alias ascii [codeunit ascii]]
+
+    [type_alias cp1251 [codeunit cp1251]]
+
+    [type_alias cp1252 [codeunit cp1252]]
+
+    [type_alias cp437 [codeunit cp437]]
+
+    [type_alias latin1 [codeunit latin1]]
+
+    [type_alias utf8 [codeunit utf8]]
+
+    [type_alias utf16 [codeunit utf16]]
+
+    [type_alias utf16le [codeunit utf16le]]
+
+    [type_alias utf16be [codeunit utf16be]]
+
+    [type_alias utf32 [codeunit utf32]]
+    
+    [type_alias utf32le [codeunit utf32le]]
+
+    [type_alias utf32be [codeunit utf32be]]
+]
