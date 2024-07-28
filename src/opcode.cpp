@@ -33,8 +33,6 @@ std::string_view to_string(r::Opcode opcode)
             return "&=";
         case r::Opcode::ARGUMENTS:
             return "arguments";
-        case r::Opcode::ARRAY:
-            return "array";
         case r::Opcode::ASSERT:
             return "assert";
         case r::Opcode::ASSUME:
@@ -51,12 +49,8 @@ std::string_view to_string(r::Opcode opcode)
             return "!=";
         case r::Opcode::BIT_CAST:
             return "bit_cast";
-        case r::Opcode::BOOL:
-            return "bool";
         case r::Opcode::BREAK:
             return "break";
-        case r::Opcode::BYTE:
-            return "byte";
         case r::Opcode::CALL:
             return "call";
         case r::Opcode::CAROT:
@@ -67,8 +61,6 @@ std::string_view to_string(r::Opcode opcode)
             return "case";
         case r::Opcode::COPY_SIGN:
             return "copy_sign";
-        case r::Opcode::CODEUNIT:
-            return "codeunit";
         case r::Opcode::CONDITION:
             return "condition";
         case r::Opcode::CONSTRUCT:
@@ -111,10 +103,6 @@ std::string_view to_string(r::Opcode opcode)
             return "fall_through";
         case r::Opcode::FALSE:
             return "false";
-        case r::Opcode::FIXED_POINT:
-            return "fixed_point";
-        case r::Opcode::FLOATING_POINT:
-            return "floating_point";
         case r::Opcode::FOR:
             return "for";
         case r::Opcode::FUNCTION:
@@ -135,8 +123,6 @@ std::string_view to_string(r::Opcode opcode)
             return "if";
         case r::Opcode::INFINITE_LOOP:
             return "infinite_loop";
-        case r::Opcode::INTEGER:
-            return "integer";
         case r::Opcode::INDEX_INTO:
             return "index_into";
         case r::Opcode::IMPORT:
@@ -227,10 +213,30 @@ std::string_view to_string(r::Opcode opcode)
             return "type_alias";
         case r::Opcode::UNREACHABLE:
             return "unreachable";
-        case r::Opcode::VOID:
-            return "void";
         case r::Opcode::WHILE:
             return "while";
+
+        // builtin types
+        case r::Opcode::BUILTIN_VARIADIC_ARGUMENTS:
+            return "builtin_variadic_arguments";
+        case r::Opcode::BUILTIN_ARRAY:
+            return "builtin_array";
+        case r::Opcode::BUILTIN_BOOL:
+            return "builtin_bool";
+        case r::Opcode::BUILTIN_BYTE:
+            return "builtin_byte";
+        case r::Opcode::BUILTIN_CODEUNIT:
+            return "builtin_codeunit";
+        case r::Opcode::BUILTIN_FIXED_POINT:
+            return "builtin_fixed_point";
+        case r::Opcode::BUILTIN_FLOATING_POINT:
+            return "builtin_floating_point";
+        case r::Opcode::BUILTIN_INTEGER:
+            return "builtin_integer";
+        case r::Opcode::BUILTIN_VOID:
+            return "builtin_void";
+
+        // attributes
         case r::Opcode::CALL_CONVENTION:
             return "calling_convention";
         case r::Opcode::PUBLIC:
@@ -273,7 +279,6 @@ r::Opcode to_opcode(std::string_view str) {
             {"&&", r::Opcode::AND_AND},
             {"&=", r::Opcode::AND_EQUAL},
             {"arguments", r::Opcode::ARGUMENTS},
-            {"array", r::Opcode::ARRAY},
             {"assert", r::Opcode::ASSERT},
             {"assume", r::Opcode::ASSUME},
             {"@", r::Opcode::AT},
@@ -282,14 +287,11 @@ r::Opcode to_opcode(std::string_view str) {
             {"!!", r::Opcode::BANG_BANG},
             {"!=", r::Opcode::BANG_EQUAL},
             {"bit_cast", r::Opcode::BIT_CAST},
-            {"bool", r::Opcode::BOOL},
             {"break", r::Opcode::BREAK},
-            {"byte", r::Opcode::BYTE},
             {"call", r::Opcode::CALL},
             {"^", r::Opcode::CAROT},
             {"^=", r::Opcode::CAROT_EQUAL},
             {"case", r::Opcode::CASE},
-            {"codeunit", r::Opcode::CODEUNIT},
             {"condition", r::Opcode::CONDITION},
             {"construct", r::Opcode::CONSTRUCT},
             {"constructor", r::Opcode::CONSTRUCTOR},
@@ -312,8 +314,6 @@ r::Opcode to_opcode(std::string_view str) {
             {"export_group", r::Opcode::EXPORT_GROUP},
             {"fall_through", r::Opcode::FALL_THROUGH},
             {"false", r::Opcode::FALSE},
-            {"fixed_point", r::Opcode::FIXED_POINT},
-            {"floating_point", r::Opcode::FLOATING_POINT},
             {"for", r::Opcode::FOR},
             {"function", r::Opcode::FUNCTION},
             {"global", r::Opcode::GLOBAL},
@@ -325,7 +325,6 @@ r::Opcode to_opcode(std::string_view str) {
             {"if", r::Opcode::IF},
             {"index_into", r::Opcode::INDEX_INTO},
             {"infinite_loop", r::Opcode::INFINITE_LOOP},
-            {"integer", r::Opcode::INTEGER},
             {"indeterminate_value", r::Opcode::INDETERMINATE_VALUE},
             {"import", r::Opcode::IMPORT},
             {"label", r::Opcode::LABEL},
@@ -370,8 +369,20 @@ r::Opcode to_opcode(std::string_view str) {
             {"truncate", r::Opcode::TRUNCATE},
             {"type_alias", r::Opcode::TYPE_ALIAS},
             {"unreachable", r::Opcode::UNREACHABLE},
-            {"void", r::Opcode::VOID},
             {"while", r::Opcode::WHILE},
+
+            // builtin types
+            {"builtin_variadic_arguments", r::Opcode::BUILTIN_VARIADIC_ARGUMENTS},
+            {"builtin_array", r::Opcode::BUILTIN_ARRAY},
+            {"builtin_bool", r::Opcode::BUILTIN_BOOL},
+            {"builtin_byte", r::Opcode::BUILTIN_BYTE},
+            {"builtin_codeunit", r::Opcode::BUILTIN_CODEUNIT},
+            {"builtin_fixed_point", r::Opcode::BUILTIN_FIXED_POINT},
+            {"builtin_floating_point", r::Opcode::BUILTIN_FLOATING_POINT},
+            {"builtin_integer", r::Opcode::BUILTIN_INTEGER},
+            {"builtin_void", r::Opcode::BUILTIN_VOID},
+
+            // attributes
             {"calling_convention", r::Opcode::CALL_CONVENTION},
             {"public", r::Opcode::PUBLIC},
             {"private", r::Opcode::PRIVATE},

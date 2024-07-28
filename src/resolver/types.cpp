@@ -178,7 +178,7 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                     assert(!operation.branches.empty());
                     expression_ptr = &operation.branches.back();
                 }
-                else if (operation.opcode == r::Opcode::ARRAY)
+                else if (operation.opcode == r::Opcode::BUILTIN_ARRAY)
                 { // arrays
                     r::Subtype& next_subtype = type.subtypes.emplace_back();
                     next_subtype.qualifiers.set(r::QualifierFlag::ARRAY, true);
@@ -269,23 +269,23 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
             if (std::holds_alternative<r::Operation>(*expression_ptr))
             {
                 const r::Operation& operation = std::get<r::Operation>(*expression_ptr);
-                if (operation.opcode == r::Opcode::BOOL)
+                if (operation.opcode == r::Opcode::BUILTIN_BOOL)
                 {
                     type.root = r::SpecialType::BOOL;
                 }
-                else if (operation.opcode == r::Opcode::BYTE)
+                else if (operation.opcode == r::Opcode::BUILTIN_BYTE)
                 {
                     type.root = r::SpecialType::BYTE;
                 }
-                else if (operation.opcode == r::Opcode::VARIADIC_ARGUMENTS)
+                else if (operation.opcode == r::Opcode::BUILTIN_VARIADIC_ARGUMENTS)
                 {
                     type.root = r::SpecialType::VARIADIC_ARGUMENTS;
                 }
-                else if (operation.opcode == r::Opcode::VOID)
+                else if (operation.opcode == r::Opcode::BUILTIN_VOID)
                 {
                     type.root = r::SpecialType::VOID;
                 }
-                else if (operation.opcode == r::Opcode::INTEGER)
+                else if (operation.opcode == r::Opcode::BUILTIN_INTEGER)
                 {
                     assert(operation.branches.size() == 2UZ);
                     const r::Expression& integer_type_expression = operation.branches.front();
@@ -307,7 +307,7 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                             bit_depth
                         );
                 }
-                else if (operation.opcode == r::Opcode::FLOATING_POINT)
+                else if (operation.opcode == r::Opcode::BUILTIN_FLOATING_POINT)
                 {
                     assert(operation.branches.size() == 1UZ);
                     const r::Expression& floating_point_type_expression = operation.branches.front();
@@ -320,7 +320,7 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                             floating_point_type
                         );
                 }
-                else if (operation.opcode == r::Opcode::FIXED_POINT)
+                else if (operation.opcode == r::Opcode::BUILTIN_FIXED_POINT)
                 {
                     assert(operation.branches.size() == 2UZ);
                     const r::Expression& integer_bits_expression = operation.branches.front();
@@ -339,7 +339,7 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                             decimal_bits
                         );
                 }
-                else if (operation.opcode == r::Opcode::CODEUNIT)
+                else if (operation.opcode == r::Opcode::BUILTIN_CODEUNIT)
                 {
                     assert(operation.branches.size() == 1UZ);
                     const r::Expression& encoding_expression = operation.branches.front();

@@ -19,7 +19,6 @@ enum class Opcode
     AND_AND,
     AND_EQUAL,
     ARGUMENTS,
-    ARRAY,
     ASSERT,
     ASSUME,
     AT,
@@ -28,14 +27,11 @@ enum class Opcode
     BANG_BANG,
     BANG_EQUAL,
     BIT_CAST,
-    BOOL,
     BREAK,
-    BYTE,
     CALL,
     CAROT,
     CAROT_EQUAL,
     CASE,
-    CODEUNIT,
     CONDITION,
     CONSTRUCT,
     CONSTRUCTOR,
@@ -58,8 +54,6 @@ enum class Opcode
     EXTERNAL_FUNCTION,
     FALL_THROUGH,
     FALSE,
-    FIXED_POINT,
-    FLOATING_POINT,
     FOR,
     FUNCTION,
     GLOBAL,
@@ -73,7 +67,6 @@ enum class Opcode
     INDETERMINATE_VALUE,
     INDEX_INTO,
     INFINITE_LOOP,
-    INTEGER,
     LABEL,
     LESS,
     LESS_EQUAL,
@@ -116,8 +109,18 @@ enum class Opcode
     TRUNCATE,
     TYPE_ALIAS,
     UNREACHABLE,
-    VOID,
     WHILE,
+
+    // builtin types
+    BUILTIN_VARIADIC_ARGUMENTS,
+    BUILTIN_ARRAY,
+    BUILTIN_BOOL,
+    BUILTIN_BYTE,
+    BUILTIN_CODEUNIT,
+    BUILTIN_FIXED_POINT,
+    BUILTIN_FLOATING_POINT,
+    BUILTIN_INTEGER,
+    BUILTIN_VOID,
 
     // attributes
     CALL_CONVENTION,
@@ -132,7 +135,6 @@ enum class Opcode
     MANGLED_NAME,
     NO_AUTODESTRUCT,
     PACKED,
-    // VARIADIC_ARGUMENTS is also a type opcode
     VARIADIC_ARGUMENTS
 };
 
