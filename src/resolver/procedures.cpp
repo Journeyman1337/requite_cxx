@@ -69,7 +69,7 @@ r::Procedure& Resolver::get_call_procedure(const r::Operation& call_operation, r
     assert(!call_operation.branches.empty());
     const r::Expression& name_expression = call_operation.branches.front();
     r::ProcedureGroup& procedure_group = this->get_procedure_group(name_expression, builder);
-    std::vector<r::Type> argument_types;
+    llvm::SmallVector<r::Type> argument_types;
     argument_types.reserve(call_operation.branches.size() - 1UZ);
     for (const r::Expression& expression : call_operation.branches | std::views::drop(1UZ))
     {
@@ -90,7 +90,7 @@ r::Procedure& Resolver::get_construct_procedure(const r::Operation& call_operati
     assert(type.get_is_object());
     r::Object& object = type.get_object();
     r::ProcedureGroup& procedure_group = object.constructor_group;
-    std::vector<r::Type> argument_types;
+    llvm::SmallVector<r::Type> argument_types;
     argument_types.reserve(call_operation.branches.size() - 1UZ);
     for (const r::Expression& expression : call_operation.branches | std::views::drop(1UZ))
     {
@@ -125,7 +125,7 @@ r::Procedure& Resolver::get_best_overload(r::ProcedureGroup& procedure_group, st
         bool fail = false;
         for (std::size_t arg_i = 0UZ; arg_i < overload->arguments.size(); arg_i++)
         {
-            const r::ProcedureArgument& overload_arg = overload->arguments.at(arg_i);
+            const r::ProcedureArgument& overload_arg = overload->arguments[arg_i];
             const r::Type& arg_type = arguments[arg_i];
             if (!this->get_is_type_assignable_to_type(arg_type, overload_arg.type))
             {

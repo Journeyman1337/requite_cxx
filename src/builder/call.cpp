@@ -23,7 +23,7 @@ void Builder::generate_call_statement(const r::Operation& operation)
             this
         );
     const r::Expression& call_expression = operation.branches.front();
-    std::vector<llvm::Value*> llvm_arguments;
+    llvm::SmallVector<llvm::Value*> llvm_arguments;
     std::size_t argument_count = operation.branches.size() - 1UZ;
     if (callee.get_has_sret())
     {
@@ -62,7 +62,7 @@ void Builder::generate_call_statement(const r::Operation& operation)
             }
             else
             {
-                const r::ProcedureArgument& procedure_arg = callee.arguments.at(input_arg_i);
+                const r::ProcedureArgument& procedure_arg = callee.arguments[input_arg_i];
                 arg_type = procedure_arg.type;
             }      
             llvm::Value* llvm_argument =
@@ -76,7 +76,7 @@ void Builder::generate_call_statement(const r::Operation& operation)
             }
             else
             {
-                const r::ProcedureArgument& procedure_arg = callee.arguments.at(input_arg_i);
+                const r::ProcedureArgument& procedure_arg = callee.arguments[input_arg_i];
                 llvm_argument->setName(procedure_arg.name);
             }     
             llvm_arguments.push_back(
@@ -113,7 +113,7 @@ void Builder::generate_call_store_expression(const r::Operation& operation, llvm
         );
     this->resolver.check_type_assignable_to_type(callee.return_type, expected_type);
     const r::Expression& call_expression = operation.branches.front();
-    std::vector<llvm::Value*> llvm_arguments;
+    llvm::SmallVector<llvm::Value*> llvm_arguments;
     std::size_t argument_count = operation.branches.size() - 1UZ;
     argument_count++; // for sret
     if (callee.get_is_instanced() && !callee.get_is_constructor())
@@ -146,7 +146,7 @@ void Builder::generate_call_store_expression(const r::Operation& operation, llvm
             }
             else
             {
-                const r::ProcedureArgument& procedure_arg = callee.arguments.at(input_arg_i);
+                const r::ProcedureArgument& procedure_arg = callee.arguments[input_arg_i];
                 arg_type = procedure_arg.type;
             }      
             llvm::Value* llvm_argument =

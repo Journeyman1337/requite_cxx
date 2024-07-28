@@ -150,17 +150,17 @@ void Builder::generate_construct_store_expression(const r::Operation& operation,
                 expected_type,
                 this
         );
-        std::vector<llvm::Value*> llvm_arguments;
+        llvm::SmallVector<llvm::Value*> llvm_arguments;
         // subtract one for the type branch. add one for the instance argument.
         llvm_arguments.resize(operation.branches.size() - 1UZ + 1UZ); 
-        llvm_arguments.at(0UZ) = llvm_store;
+        llvm_arguments.front() = llvm_store;
         for (std::size_t input_arg_i = 0UZ; input_arg_i < operation.branches.size() - 1UZ; input_arg_i++)
         { // TODO work with args that need to be temporarily stored.
             const r::Expression& arg_expression = operation.branches.at(1UZ + input_arg_i);
             r::Type arg_type{};
-            const r::ProcedureArgument& procedure_arg = callee.arguments.at(input_arg_i);
+            const r::ProcedureArgument& procedure_arg = callee.arguments[input_arg_i];
             arg_type = procedure_arg.type;           
-            llvm_arguments.at(input_arg_i + 1UZ) = // add 1 to skip the _____this
+            llvm_arguments[input_arg_i + 1UZ] = // add 1 to skip the _____this
                 this->generate_value_expression(
                     arg_expression,
                     arg_type

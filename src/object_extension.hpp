@@ -6,7 +6,6 @@
 
 #include <symbol_table.hpp>
 
-#include <vector>
 #include <memory>
 #include <string_view>
 

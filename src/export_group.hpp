@@ -7,8 +7,9 @@
 #include <symbol_table.hpp>
 #include <procedure_group.hpp>
 
+#include <llvm/ADT/SmallVector.h>
+
 #include <string_view>
-#include <vector>
 #include <memory>
 
 namespace r {
@@ -20,7 +21,7 @@ struct ExportGroup final
 {
     std::string_view name;
     r::SymbolTable table;
-    std::vector<std::unique_ptr<r::ProcedureGroup>> procedure_groups;
+    llvm::SmallVector<std::unique_ptr<r::ProcedureGroup>> procedure_groups;
 
     r::ProcedureGroup& add_procedure_group();
 };

@@ -18,7 +18,6 @@
 
 #include <filesystem>
 #include <string>
-#include <vector>
 #include <memory>
 #include <set>
 
@@ -39,17 +38,17 @@ struct Module final
     std::string source{};
     std::string mangled_name{};
     std::size_t first_declaration_i = 0UZ;
-    std::vector<r::Module*> import_vector{};
+    llvm::SmallVector<r::Module*> import_vector{};
     std::set<std::string_view> import_set{};
     bool is_expanded = false;
-    std::vector<r::Operation> ast{};
+    llvm::SmallVector<r::Operation> ast{};
     r::Binary* binary = nullptr;
-    std::vector<std::unique_ptr<r::Procedure>> procedures{};
-    std::vector<std::unique_ptr<r::Global>> globals{};
-    std::vector<std::unique_ptr<r::Object>> objects{};
-    std::vector<std::unique_ptr<r::ObjectExtension>> object_extensions{};
-    std::vector<std::unique_ptr<r::ProcedureGroup>> procedure_groups{};
-    std::vector<std::unique_ptr<r::TypeAlias>> type_aliases{};
+    llvm::SmallVector<std::unique_ptr<r::Procedure>> procedures{};
+    llvm::SmallVector<std::unique_ptr<r::Global>> globals{};
+    llvm::SmallVector<std::unique_ptr<r::Object>> objects{};
+    llvm::SmallVector<std::unique_ptr<r::ObjectExtension>> object_extensions{};
+    llvm::SmallVector<std::unique_ptr<r::ProcedureGroup>> procedure_groups{};
+    llvm::SmallVector<std::unique_ptr<r::TypeAlias>> type_aliases{};
     r::SymbolTable table{};
 
     // the index of this module in Binary::ordered_modules;

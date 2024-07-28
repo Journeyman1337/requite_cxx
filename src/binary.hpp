@@ -13,10 +13,10 @@
 #include <llvm/Target/TargetMachine.h>
 #include <llvm/Target/TargetOptions.h>
 #include <llvm/Support/TargetSelect.h>
+#include <llvm/ADT/SmallVector.h>
 
 #include <map>
 #include <string_view>
-#include <vector>
 #include <cstddef>
 #include <memory>
 
@@ -31,9 +31,9 @@ struct BinaryBase
 struct Binary final : r::BinaryBase
 {
     r::Procedure* entry_point = nullptr;
-    std::vector<r::Module> modules{};
-    std::vector<r::Module*> ordered_modules{};
-    std::vector<std::unique_ptr<r::ExportGroup>> export_groups{};
+    llvm::SmallVector<r::Module, 1UZ> modules{};
+    llvm::SmallVector<r::Module*, 1UZ> ordered_modules{};
+    llvm::SmallVector<std::unique_ptr<r::ExportGroup>, 1UZ> export_groups{};
     r::SymbolTable table;
 
     std::string llvm_target_triple{};

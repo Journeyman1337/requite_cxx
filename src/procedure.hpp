@@ -35,7 +35,7 @@ struct Procedure final
     r::ProcedureCategory category = r::ProcedureCategory::UNKNOWN;
     r::Type return_type{};
     bool has_variadic_arguments = false;
-    std::vector<r::ProcedureArgument> arguments{};
+    llvm::SmallVector<r::ProcedureArgument> arguments{};
     // the index of the operation branch where the function body starts.
     std::size_t body_start_i = 0UZ;
     const r::Operation* declaration = nullptr;

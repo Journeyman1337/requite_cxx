@@ -11,9 +11,9 @@
 #include <procedure_group.hpp>
 
 #include <llvm/IR/DerivedTypes.h>
+#include <llvm/ADT/SmallVector.h>
 
 #include <string_view>
-#include <vector>
 #include <memory>
 #include <unordered_map>
 
@@ -36,7 +36,7 @@ struct Object final
     r::SymbolTable table{};
     const r::Operation* declaration = nullptr;
     r::Module* module = nullptr;
-    std::vector<std::unique_ptr<r::Property>> properties{};
+    llvm::SmallVector<std::unique_ptr<r::Property>> properties{};
     std::unordered_map<std::string_view, r::Property*> property_table{};
     r::Attributes attributes{};
 

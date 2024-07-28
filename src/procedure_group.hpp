@@ -7,7 +7,8 @@
 #include <type.hpp>
 #include <procedure_category.hpp>
 
-#include <vector>
+#include <llvm/ADT/SmallVector.h>
+
 #include <string_view>
 #include <span>
 
@@ -17,11 +18,14 @@ struct Procedure;
 struct ProcedureArgument;
 struct Resolver;
 
+using OverloadVector =
+    llvm::SmallVector<r::Procedure*, 1UZ>;
+
 struct ProcedureGroup final
 {
     std::string_view name{};
     r::ProcedureCategory category = r::ProcedureCategory::UNKNOWN;
-    std::vector<r::Procedure*> overloads{};
+    r::OverloadVector overloads{};
     r::Type return_type{};
 
     void add_overload(r::Procedure& procedure, r::Resolver& resolver);

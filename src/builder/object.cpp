@@ -12,7 +12,6 @@
 #include <llvm/IR/DerivedTypes.h>
 
 #include <cassert>
-#include <vector>
 #include <memory>
 #include <ranges>
 
@@ -22,7 +21,7 @@ void Builder::generate_prototype(r::Object& object)
 {
     r::Resolver old_resolver = this->resolver;
     this->resolver.enter(object);
-    std::vector<llvm::Type*> llvm_property_types{};
+    llvm::SmallVector<llvm::Type*> llvm_property_types{};
     llvm_property_types.reserve(object.properties.size());
     for (std::unique_ptr<r::Property>& property_ptr : object.properties)
     {

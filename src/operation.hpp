@@ -7,9 +7,11 @@
 #include <opcode.hpp>
 #include <literal.hpp>
 
+#include <llvm/ADT/SmallVector.h>
+
 #include <string_view>
-#include <vector>
 #include <variant>
+#include <vector>
 
 namespace r {
 

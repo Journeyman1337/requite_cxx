@@ -4,14 +4,15 @@
 
 #pragma once
 
-#include <vector>
+#include <llvm/ADT/SmallVector.h>
+
 #include <filesystem>
 
 namespace r {
 
 struct BuildCommand final
 {
-    std::vector<std::filesystem::path> source_files{};
+    llvm::SmallVector<std::filesystem::path> source_files{};
 };
 
 }

@@ -6,8 +6,6 @@
 
 #include <resolver/resolver.hpp>
 
-#include <vector>
-
 namespace r {
 
 struct ExportGroup;

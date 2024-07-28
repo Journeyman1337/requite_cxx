@@ -14,7 +14,6 @@
 
 #include <stdexcept>
 #include <string_view>
-#include <vector>
 #include <ranges>
 #include <cstddef>
 #include <variant>
@@ -54,7 +53,7 @@ void Builder::generate_prototype(r::Procedure& procedure)
     }
     else
     {
-        std::vector<llvm::Type*> llvm_argument_types{};
+        llvm::SmallVector<llvm::Type*> llvm_argument_types{};
         std::size_t argument_count = procedure.arguments.size();
         if (procedure.get_has_sret())
         {

@@ -11,7 +11,6 @@
 #include <cassert>
 #include <variant>
 #include <cstddef>
-#include <vector>
 
 namespace r {
 

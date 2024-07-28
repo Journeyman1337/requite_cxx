@@ -54,10 +54,10 @@ void Builder::pop_scope()
 {
     assert(!this->scopes.empty());
     this->generate_autodestruct_scope();
-    const std::vector<std::size_t>& top_scope = this->scopes.back();
+    const llvm::SmallVector<std::size_t>& top_scope = this->scopes.back();
     for (const std::size_t& local_i : top_scope)
     {
-        r::Local& local = *this->locals.at(local_i).get();
+        r::Local& local = *this->locals[local_i].get();
         assert(this->local_table.contains(local.name));
         this->local_table.erase(local.name);
     }
@@ -85,7 +85,7 @@ void Builder::clear_frame()
     local.name = name;
     local.type = type;
     this->local_table[name] = &local;
-    std::vector<std::size_t>& back_scope = this->scopes.back();
+    llvm::SmallVector<std::size_t>& back_scope = this->scopes.back();
     back_scope.push_back(this->locals.size() - 1UZ);
     return local;
  }
@@ -98,7 +98,7 @@ void Builder::clear_frame()
     r::Local& local = *local_ptr.get();
     local.type = type;
     local.name = "temp";
-    std::vector<std::size_t>& back_scope = this->scopes.back();
+    llvm::SmallVector<std::size_t>& back_scope = this->scopes.back();
     back_scope.push_back(this->locals.size() - 1UZ);
     return local;
  }

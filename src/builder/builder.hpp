@@ -14,9 +14,9 @@
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/Constants.h>
+#include <llvm/ADT/SmallVector.h>
 
 #include <memory>
-#include <vector>
 #include <map>
 #include <cstddef>
 
@@ -37,12 +37,12 @@ struct Builder final
    r::Resolver resolver{};
 
    // frame
-   std::vector<std::unique_ptr<r::Local>> locals{};
-   std::vector<std::vector<std::size_t>> scopes{};
+   llvm::SmallVector<std::unique_ptr<r::Local>> locals{};
+   llvm::SmallVector<llvm::SmallVector<std::size_t>> scopes{};
    std::map<std::string_view, r::Local*> local_table{};
 
-   std::vector<llvm::BasicBlock*> llvm_continue_stack{};
-   std::vector<llvm::BasicBlock*> llvm_break_stack{};
+   llvm::SmallVector<llvm::BasicBlock*> llvm_continue_stack{};
+   llvm::SmallVector<llvm::BasicBlock*> llvm_break_stack{};
    std::unique_ptr<llvm::IRBuilder<>> llvm_builder{};
    llvm::BasicBlock* current_block = nullptr;
 

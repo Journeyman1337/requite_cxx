@@ -25,7 +25,7 @@ void Module::determine_imports()
         {
             return;
         }
-        operation_ptr = &this->ast.at(1UZ);
+        operation_ptr = &this->ast[1UZ];
     }
     if (operation_ptr->opcode == r::Opcode::IMPORT)
     {
@@ -51,7 +51,7 @@ void Module::expand_imports()
     this->is_expanded = true;
     for (std::size_t import_i = 0UZ; import_i < this->import_vector.size(); import_i++)
     {
-        r::Module& import = *this->import_vector.at(import_i);
+        r::Module& import = *this->import_vector[import_i];
         import.expand_imports();
         for (r::Module* import_import_ptr : import.import_vector)
         {

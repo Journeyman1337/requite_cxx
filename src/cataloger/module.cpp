@@ -24,7 +24,7 @@ void Cataloger::tabulate(r::Module& module)
     {
         module.first_declaration_i++;
     }
-    if (module.ast.at(module.first_declaration_i).opcode == r::Opcode::IMPORT)
+    if (module.ast[module.first_declaration_i].opcode == r::Opcode::IMPORT)
     {
         module.first_declaration_i++;
     }

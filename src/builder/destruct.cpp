@@ -101,10 +101,10 @@ void Builder::generate_autodestruct_object(r::Object& object, llvm::Value* llvm_
 void Builder::generate_autodestruct_scope()
 {
     assert(!this->scopes.empty());
-    const std::vector<std::size_t>& top_scope = this->scopes.back();
+    const llvm::SmallVector<std::size_t>& top_scope = this->scopes.back();
     for (std::size_t local_i : top_scope)
     {
-        std::unique_ptr<r::Local>& local_ptr = this->locals.at(local_i);
+        std::unique_ptr<r::Local>& local_ptr = this->locals[local_i];
         assert(local_ptr.get() != nullptr);
         r::Local& local = *local_ptr.get();
         if (local.get_is_no_autodestruct())
