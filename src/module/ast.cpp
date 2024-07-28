@@ -190,12 +190,7 @@ void Module::parse_ast()
                     this->char_i - start_i
                 );
         }
-
-        void fold_conditional_blocks()
-        {
-
-        }
-
+    
         r::Literal parse_number()
         {
             assert(!this->get_is_at_end());
