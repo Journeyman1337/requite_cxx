@@ -24,6 +24,10 @@
 
 namespace r {
 
+Type::Type(r::TypeRoot root)
+    : root(root)
+{}
+
 constexpr std::array<std::size_t, 21UZ> LITERAL_INT_MAX_VALUE_DIGIT_COUNT_MINUS_ONE =
     {
         2UZ,
@@ -73,7 +77,6 @@ constexpr std::array<std::size_t, 21UZ> INT_BIT_DEPTHS =
         4194304UZ,
         8388608UZ
     };
-
 
 Type::Type(const r::Literal& literal)
 {
@@ -494,7 +497,7 @@ void Type::resolve_type_alias() noexcept
     {
         r::TypeAlias* alias = std::get<r::TypeAlias*>(this->root);
         std::size_t old_subtypes_size = this->subtypes.size();
-        std::vector<r::Subtype>& alias_subtypes = alias->type.subtypes;
+        r::SubtypeVector& alias_subtypes = alias->type.subtypes;
         this->subtypes.insert(
             this->subtypes.end(),
             alias_subtypes.begin(),
@@ -503,7 +506,7 @@ void Type::resolve_type_alias() noexcept
         this->root = alias->type.root;
         if (!alias_subtypes.empty())
         {
-            r::Subtype& qualified_subtype = this->subtypes.at(old_subtypes_size);
+            r::Subtype& qualified_subtype = this->subtypes[old_subtypes_size];
             qualified_subtype.qualifiers |= this->qualifiers;
             this->qualifiers = alias->type.qualifiers;
         }
@@ -563,8 +566,8 @@ bool get_types_are_equivalent(const r::Type& type_a, const r::Type& type_b)
     }
     for (std::size_t subtype_i = 0UZ; subtype_i < type_a.subtypes.size(); subtype_i++)
     {
-        const r::Subtype& subtype_a = type_a.subtypes.at(subtype_i);
-        const r::Subtype& subtype_b = type_b.subtypes.at(subtype_i);
+        const r::Subtype& subtype_a = type_a.subtypes[subtype_i];
+        const r::Subtype& subtype_b = type_b.subtypes[subtype_i];
         if (subtype_a.qualifiers.test(r::QualifierFlag::MUTABLE) != subtype_b.qualifiers.test(r::QualifierFlag::MUTABLE))
         {
             return false;

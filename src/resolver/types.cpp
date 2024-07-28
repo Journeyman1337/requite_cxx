@@ -33,8 +33,8 @@ bool Resolver::get_is_type_assignable_to_type(const r::Type& from, const r::Type
     }
     for (std::size_t subtype_i = 0UZ; subtype_i < from.subtypes.size(); subtype_i++)
     {
-        const r::Subtype& from_subtype = from.subtypes.at(subtype_i);
-        const r::Subtype& to_subtype = to.subtypes.at(subtype_i);
+        const r::Subtype& from_subtype = from.subtypes[subtype_i];
+        const r::Subtype& to_subtype = to.subtypes[subtype_i];
         if (from_subtype.qualifiers.test(r::QualifierFlag::POINTER) != to_subtype.qualifiers.test(r::QualifierFlag::POINTER))
         {
             return false;

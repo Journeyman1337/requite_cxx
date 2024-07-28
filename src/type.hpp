@@ -11,6 +11,7 @@
 #include <subtype.hpp>
 
 #include <llvm/IR/Type.h>
+#include <llvm/ADT/SmallVector.h>
 
 #include <variant>
 #include <bitset>
@@ -21,16 +22,17 @@ namespace r {
 struct Module;
 struct Literal;
 
+using SubtypeVector =
+    llvm::SmallVector<r::Subtype, 1UZ>;
+
 struct Type final
 {
     r::TypeRoot root{};
     r::QualifierFlagSet qualifiers{};
-    std::vector<r::Subtype> subtypes{};
+    r::SubtypeVector subtypes{};
 
     Type() noexcept = default;
-    constexpr Type(r::TypeRoot root) 
-        : root(root)
-    {}
+    Type(r::TypeRoot root);
     Type(const r::Literal& literal);
 
     void add_pointer();
@@ -68,15 +70,15 @@ struct Type final
     bool get_is_llvm_store_type() const noexcept;
 };
 
-constexpr r::Type BOOL_TYPE = r::Type(r::SpecialType::BOOL);
+const r::Type BOOL_TYPE = r::Type(r::SpecialType::BOOL);
 
-constexpr r::Type BYTE_TYPE = r::Type(r::SpecialType::BYTE);
+const r::Type BYTE_TYPE = r::Type(r::SpecialType::BYTE);
 
-constexpr r::Type VOID_TYPE = r::Type(r::SpecialType::VOID);
+const r::Type VOID_TYPE = r::Type(r::SpecialType::VOID);
 
-constexpr r::Type VARIADIC_ARGUMENTS_TYPE = r::Type(r::SpecialType::VARIADIC_ARGUMENTS);
+const r::Type VARIADIC_ARGUMENTS_TYPE = r::Type(r::SpecialType::VARIADIC_ARGUMENTS);
 
-constexpr r::Type SIGNED_32_BIT_INTEGER_TYPE = r::Type(r::Integer(r::IntegerType::SIGNED, 32UZ));
+const r::Type SIGNED_32_BIT_INTEGER_TYPE = r::Type(r::Integer(r::IntegerType::SIGNED, 32UZ));
 
 
 bool operator==(const r::Subtype& lhs, const r::Subtype& rhs) noexcept;
