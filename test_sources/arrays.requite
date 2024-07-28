@@ -4,7 +4,7 @@
 
 [entry_point
 
-    [local my_local_array [array r:i32 7] [indeterminate_value]]
+    [local my_local_array [builtin_array r:i32 7] [indeterminate_value]]
 
     [for [local x r:i32 0][< x 7][+= x 1]
         

@@ -5,7 +5,7 @@
 [variadic_arguments],
 [function my_variadic_function void [arguments i32 count]
 
-    [local [variadic_arguments] va_args]
+    [local [builtin_variadic_arguments] va_args]
     [start_variadic_arguments va_args]
     [for [local i32 i 0][< i count][+= i 1]
         (c:printf "%d\n" [access_variadic_argument i32 va_args])

@@ -16,7 +16,7 @@
     c:printf("%d\n" my_var)
     c:printf("%d\n" [dereference my_var_ptr])
 
-    [local my_array [array r:i32 42] [indeterminate_value]]
+    [local my_array [builtin_array r:i32 42] [indeterminate_value]]
 
     [for [local x r:i32 0][< x 42][+= x 1]
     
