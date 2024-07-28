@@ -121,6 +121,7 @@ void Module::parse_ast()
                                 this->skip_multi_line_comment();
                                 break;
                         }
+                        break;
                     default:
                         if (std::isspace(this->get_cur_char()))
                         {
