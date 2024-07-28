@@ -80,7 +80,7 @@ constexpr std::array<std::size_t, 21UZ> INT_BIT_DEPTHS =
 
 Type::Type(const r::Literal& literal)
 {
-    this->qualifiers.set(r::QualifierFlag::LITERAL, true);
+    this->qualifiers.set(r::QualifierFlag::LITERAL);
     if (literal.type == r::LiteralType::CODEUNIT)
     {
         this->root = r::Codeunit(r::Encoding::ASCII);
@@ -89,7 +89,7 @@ Type::Type(const r::Literal& literal)
     {
         this->root = r::Codeunit(r::Encoding::ASCII);
         r::Subtype& subtype = this->subtypes.emplace_back();
-        subtype.qualifiers.set(r::QualifierFlag::POINTER, true);
+        subtype.qualifiers.set(r::QualifierFlag::POINTER);
     }
     else if (literal.type == r::LiteralType::NUMBER)
     {
@@ -123,7 +123,7 @@ Type::Type(const r::Literal& literal)
 void Type::add_pointer()
 {
     r::Subtype& subtype = this->subtypes.emplace_back();
-    subtype.qualifiers.set(r::QualifierFlag::POINTER, true);
+    subtype.qualifiers.set(r::QualifierFlag::POINTER);
 }
 
 bool Type::get_is_empty() const noexcept
@@ -134,7 +134,7 @@ bool Type::get_is_empty() const noexcept
 void Type::clear() noexcept
 {
     this->root = {};
-    this->qualifiers.reset();
+    this->qualifiers = {};
     this->subtypes.clear();
 }
 
@@ -462,15 +462,53 @@ bool Type::get_is_volatile() const noexcept
     }
 }
 
-void Type::set_mutable(bool mutability) noexcept
+r::QualifierFlagSet& Type::get_top_qualifiers() noexcept
 {
     if (this->subtypes.empty())
     {
-        this->qualifiers.set(r::QualifierFlag::MUTABLE, mutability);
+        return this->qualifiers;
     }
     else
     {
-        this->subtypes.back().qualifiers.set(r::QualifierFlag::MUTABLE, mutability);
+        return this->subtypes.back().qualifiers;
+    }
+}
+
+const r::QualifierFlagSet& Type::get_top_qualifiers() const noexcept
+{
+    if (this->subtypes.empty())
+    {
+        return this->qualifiers;
+    }
+    else
+    {
+        return this->subtypes.back().qualifiers;
+    }
+}
+
+void Type::set_mutable(bool mutability) noexcept
+{
+    r::QualifierFlagSet& qualifiers = this->get_top_qualifiers();
+    if (mutability)
+    {
+        qualifiers.set(r::QualifierFlag::MUTABLE);
+    }
+    else
+    {
+        qualifiers.reset(r::QualifierFlag::MUTABLE);
+    }
+}
+
+void Type::set_volatile(bool volatility) noexcept
+{
+    r::QualifierFlagSet& qualifiers = this->get_top_qualifiers();
+    if (volatility)
+    {
+        qualifiers.set(r::QualifierFlag::VOLATILE);
+    }
+    else
+    {
+        qualifiers.reset(r::QualifierFlag::VOLATILE);
     }
 }
 
@@ -483,7 +521,7 @@ bool Type::get_is_literal() const noexcept
 
 void Type::clear_literals() noexcept
 {
-    this->qualifiers.set(r::QualifierFlag::LITERAL, false);
+    this->qualifiers.reset(r::QualifierFlag::LITERAL);
 }
 
 bool Type::get_is_type_alias() const noexcept

@@ -25,6 +25,7 @@ target_sources(
         "procedure.cpp"
         "property.cpp"
         "special_type.cpp"
+        "subtype.cpp"
         "string_utility.cpp"
         "symbol_table.cpp"
         "type.cpp"

@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <bitset>
+#include <llvm/ADT/Bitset.h>
+
 #include <cstddef>
 
 namespace r {
@@ -28,6 +29,6 @@ enum Type : std::size_t
 
 }
 
-using QualifierFlagSet = std::bitset<r::QualifierFlag::COUNT>;
+using QualifierFlagSet = llvm::Bitset<r::QualifierFlag::COUNT>;
 
 }

@@ -170,9 +170,9 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                 if (operation.opcode == r::Opcode::STAR)
                 { // pointers
                     r::Subtype& next_subtype = type.subtypes.emplace_back();
-                    next_subtype.qualifiers.set(r::QualifierFlag::POINTER, true);
-                    next_subtype.qualifiers.set(r::QualifierFlag::MUTABLE, qualifier_is_mutable);
-                    next_subtype.qualifiers.set(r::QualifierFlag::VOLATILE, qualifier_is_volatile);
+                    next_subtype.qualifiers.set(r::QualifierFlag::POINTER);
+                    next_subtype.set_mutable(qualifier_is_mutable);
+                    next_subtype.set_volatile(qualifier_is_volatile);
                     qualifier_is_mutable = false;
                     qualifier_is_volatile = false;
                     assert(!operation.branches.empty());
@@ -181,15 +181,15 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                 else if (operation.opcode == r::Opcode::BUILTIN_ARRAY)
                 { // arrays
                     r::Subtype& next_subtype = type.subtypes.emplace_back();
-                    next_subtype.qualifiers.set(r::QualifierFlag::ARRAY, true);
+                    next_subtype.qualifiers.set(r::QualifierFlag::ARRAY);
+                    next_subtype.set_mutable(qualifier_is_mutable);
+                    next_subtype.set_volatile(qualifier_is_volatile);
                     assert(operation.branches.size() == 2UZ);
                     const r::Expression& size_expression = operation.branches.back();
                     assert(std::holds_alternative<r::Literal>(size_expression));
                     const r::Literal& size_literal = std::get<r::Literal>(size_expression);
                     assert(size_literal.type == r::LiteralType::NUMBER);
                     next_subtype.array_size = r::to_number(size_literal.text);
-                    next_subtype.qualifiers.set(r::QualifierFlag::MUTABLE, qualifier_is_mutable);
-                    next_subtype.qualifiers.set(r::QualifierFlag::VOLATILE, qualifier_is_volatile);
                     qualifier_is_mutable = false;
                     qualifier_is_volatile = false;
                     expression_ptr = &operation.branches.front();

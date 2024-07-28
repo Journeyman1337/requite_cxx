@@ -16,6 +16,9 @@ struct Subtype final
 
     // must not be 0 for arrays. no unbounded arrays! (yet)
     std::size_t array_size = 0UZ;
+
+    void set_mutable(bool mutability) noexcept;
+    void set_volatile(bool volatility) noexcept;
 };
 
 }

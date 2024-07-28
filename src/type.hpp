@@ -14,7 +14,6 @@
 #include <llvm/ADT/SmallVector.h>
 
 #include <variant>
-#include <bitset>
 #include <cstddef>
 
 namespace r {
@@ -58,7 +57,10 @@ struct Type final
     bool get_is_object() const noexcept;
     bool get_is_mutable() const noexcept;
     bool get_is_volatile() const noexcept;
+    r::QualifierFlagSet& get_top_qualifiers() noexcept;
+    const r::QualifierFlagSet& get_top_qualifiers() const noexcept;
     void set_mutable(bool mutability) noexcept;
+    void set_volatile(bool volatility) noexcept;
     bool get_is_literal() const noexcept;
     void clear_literals() noexcept;
     bool get_is_type_alias() const noexcept;
