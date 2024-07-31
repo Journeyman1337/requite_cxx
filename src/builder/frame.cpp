@@ -17,13 +17,23 @@ namespace r {
 void Builder::generate_arguments()
 {
     auto arg_iter = this->resolver.procedure->llvm_function->arg_begin();
-    if (this->resolver.procedure->get_has_sret())
+    if (
+        this->resolver.procedure->get_is_constructor() ||
+        this->resolver.procedure->get_is_destructor()
+    )
     {
         arg_iter++;
     }
-    if (this->resolver.procedure->get_is_instanced())
+    else 
     {
-        arg_iter++;
+        if (this->resolver.procedure->get_has_sret())
+        {
+            arg_iter++;
+        }
+        if (this->resolver.procedure->get_is_instanced())
+        {
+            arg_iter++;
+        }
     }
     for (const r::ProcedureArgument& argument : this->resolver.procedure->arguments)
     {
