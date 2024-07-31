@@ -43,7 +43,10 @@ llvm::Value* Procedure::get_this()
 {
     assert(this->get_is_instanced());
     auto arg_iter = this->llvm_function->arg_begin();
-    if (this->get_is_constructor())
+    if (
+        this->get_is_constructor() ||
+        this->get_is_destructor()
+    )
     {
         return arg_iter;
     }
