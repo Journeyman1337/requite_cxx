@@ -30,6 +30,7 @@ r::BreakType Builder::attribute_statement(const r::Operation& operation)
 
 r::BreakType Builder::generate_statement(const r::Operation& operation)
 {
+    assert(this->temporary_table.empty());
     switch (operation.opcode)
     {
         case r::Opcode::ACCESS_TABLE:
