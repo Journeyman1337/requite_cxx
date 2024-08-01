@@ -14,6 +14,7 @@ struct Temporary final
 {
     r::Type type{};
     llvm::AllocaInst* llvm_alloca = nullptr;
+    llvm::Value* llvm_dynamic_array_size = nullptr;
 };
 
 }
