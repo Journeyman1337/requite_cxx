@@ -13,7 +13,7 @@ enum class BreakType
     CONTINUE,
     FALL_THROUGH,
     RETURN,
-    GOTO
+    GO_TO
 };
 
 }

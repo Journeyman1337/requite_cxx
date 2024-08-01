@@ -57,7 +57,7 @@ enum class Opcode
     FOR,
     FUNCTION,
     GLOBAL,
-    GOTO,
+    GO_TO,
     GREATER,
     GREATER_EQUAL,
     GREATER_GREATER,

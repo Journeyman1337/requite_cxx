@@ -107,8 +107,8 @@ std::string_view to_string(r::Opcode opcode)
             return "for";
         case r::Opcode::FUNCTION:
             return "function";
-        case r::Opcode::GOTO:
-            return "goto";
+        case r::Opcode::GO_TO:
+            return "go_to";
         case r::Opcode::GREATER:
             return ">";
         case r::Opcode::HASH:
@@ -315,7 +315,7 @@ r::Opcode to_opcode(std::string_view str) {
             {"for", r::Opcode::FOR},
             {"function", r::Opcode::FUNCTION},
             {"global", r::Opcode::GLOBAL},
-            {"goto", r::Opcode::GOTO},
+            {"go_to", r::Opcode::GO_TO},
             {">", r::Opcode::GREATER},
             {">=", r::Opcode::GREATER_EQUAL},
             {">>", r::Opcode::GREATER_GREATER},

@@ -62,9 +62,9 @@ void Builder::generate_return_statement(const r::Operation& operation)
     }
 }
 
-void Builder::generate_goto_statement(const r::Operation& operation)
+void Builder::generate_GO_TO_statement(const r::Operation& operation)
 {
-    assert(operation.opcode == r::Opcode::GOTO);
+    assert(operation.opcode == r::Opcode::GO_TO);
     assert(!operation.branches.empty());
     const r::Expression& name_expression = operation.branches.front();
     assert(std::holds_alternative<std::string_view>(name_expression));

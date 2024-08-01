@@ -240,7 +240,7 @@ private:
 
    // jump.cpp
    void generate_return_statement(const r::Operation& operation);
-   void generate_goto_statement(const r::Operation& operation);
+   void generate_GO_TO_statement(const r::Operation& operation);
    void generate_break_statement(const r::Operation& operation);
    void generate_continue_statement(const r::Operation& operation);
    void generate_label_statement(const r::Operation& operation);

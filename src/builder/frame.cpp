@@ -81,7 +81,7 @@ void Builder::finish_frame()
     {
         if (!label.second.is_placed)
         {
-            throw std::runtime_error("goto label must exist.");
+            throw std::runtime_error("GO_TO label must exist.");
         }
     }
     this->label_table.clear();
