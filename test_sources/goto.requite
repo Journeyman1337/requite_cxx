@@ -2,12 +2,12 @@
 //
 // SPDX-License-Identifier: MIT
 
+// goto statements are a bit confusing, but requite supports them to match feature set of C.
 [entry_point
     [if [false]
-        [label linux]
+        [label my_label]
         c:puts("Hello, world!")
+        [return 0]
     ]
-
-    c:puts("Goodbye, world!")
-    [goto linux]
+    [goto my_label]
 ]
