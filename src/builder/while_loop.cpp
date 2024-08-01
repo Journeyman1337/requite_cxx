@@ -35,6 +35,7 @@ void Builder::generate_while_statement(const r::Operation& operation)
             llvm_body_block,
             llvm_merge_block
         );
+    this->clear_temporaries();
     this->llvm_continue_stack.push_back(llvm_continue_block);
     this->llvm_break_stack.push_back(llvm_merge_block);
     this->set_current_block(llvm_body_block);
