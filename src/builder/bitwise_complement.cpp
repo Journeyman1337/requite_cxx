@@ -13,16 +13,18 @@ namespace r {
 
 llvm::Value* Builder::generate_bitwise_complement_value_expression(const r::Operation& operation, const r::Type& expected_type)
 {
+    // TODO
     return nullptr;
 }
 
 void Builder::generate_bitwise_complement_assignment_statement(const r::Operation& operation)
 {
-
+    // TODO
 }
 
 llvm::Value* Builder::generate_bitwise_complement_assignment_value_expression(const r::Operation& operation, const r::Type& expected_type)
 {
+    // TODO
     return nullptr;
 }
 
