@@ -434,13 +434,31 @@ r::Type Resolver::deduce_type(const r::Expression& expression, r::Builder* build
         {
             assert(!operation.branches.empty());
             const r::Expression& type_expression = operation.branches.front();
-            return this->resolve_type(type_expression);
+            r::Type type = this->resolve_type(type_expression);
+            type.resolve_type_alias();
+            return type;
         }
         if (operation.opcode == r::Opcode::LOCAL)
         {
-            assert(operation.branches.size() >= 2UZ);
-            const r::Expression& type_expression = operation.branches.at(1UZ);
-            return this->resolve_type(type_expression);
+            assert(!operation.branches.empty());
+            if (operation.branches.size() == 3UZ)
+            {
+                const r::Expression& type_expression = operation.branches.at(1UZ);
+                r::Type type = this->resolve_type(type_expression);
+                type.resolve_type_alias();
+                return type;
+            }
+            else if (operation.branches.size() == 2UZ)
+            {
+                const r::Expression& type_expression = operation.branches.back();
+                r::Type type = this->deduce_type(type_expression, builder);
+                type.clear_literals();
+                return type;
+            }
+            else
+            {
+                r::unreachable();
+            }
         }
         if (operation.opcode == r::Opcode::CALL)
         {
