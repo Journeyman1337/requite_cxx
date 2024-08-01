@@ -124,6 +124,7 @@ r::BreakType Builder::generate_statement(const r::Operation& operation)
         default:
             r::unreachable();        
     }
+    this->clear_temporaries();
     return r::BreakType::NONE;
 }
 
