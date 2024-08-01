@@ -18,7 +18,7 @@
 #include <llvm/IR/Constants.h>
 #include <llvm/ADT/SmallVector.h>
 #include <llvm/ADT/StringMap.h>
-#include <llvm/ADT/IndexedMap.h>
+#include <llvm/ADT/DenseMap.h>
 
 #include <memory>
 #include <cstddef>
@@ -44,7 +44,7 @@ struct Builder final
    llvm::SmallVector<llvm::SmallVector<std::size_t>> scopes{};
    llvm::StringMap<r::Local*> local_table{};
    llvm::StringMap<r::Label> label_table{};
-   llvm::IndexedMap<r::Temporary, std::size_t> temporary_table{};
+   llvm::DenseMap<const r::Operation*, r::Temporary> temporary_table{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_continue_stack{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_break_stack{};
 
