@@ -92,9 +92,9 @@ void Builder::finish_frame()
 
 void Builder::clear_temporaries()
 {
-    for (r::Temporary& temporary : this->temporary_table)
+    for (llvm::detail::DenseMapPair<const r::Expression*, r::Temporary>& temporary_pair : this->temporary_table)
     {
-        this->generate_destruct(temporary);
+        this->generate_destruct(temporary_pair.second);
     }
     this->temporary_table.clear();
 }
