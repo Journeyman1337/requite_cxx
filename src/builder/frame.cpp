@@ -147,7 +147,6 @@ void Builder::generate_local(r::Local& local, llvm::Value* llvm_dynamic_array_si
         this->resolver.get_llvm_type(
             local.type
         );
-    const std::size_t ptr_size = this->resolver.get_pointer_bit_depth();
     local.llvm_alloca =
         this->generate_alloca(
             llvm_type,
