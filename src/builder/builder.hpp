@@ -44,7 +44,7 @@ struct Builder final
    llvm::SmallVector<llvm::SmallVector<std::size_t>> scopes{};
    llvm::StringMap<r::Local*> local_table{};
    llvm::StringMap<r::Label> label_table{};
-   llvm::DenseMap<const r::Operation*, r::Temporary> temporary_table{};
+   llvm::DenseMap<const r::Expression*, r::Temporary> temporary_table{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_continue_stack{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_break_stack{};
 
@@ -126,13 +126,17 @@ private:
    void push_scope();
    void pop_scope();
    void finish_frame();
+   void clear_temporaries();
    r::Local& add_local(std::string_view name, const r::Type& type);
-   r::Local& add_temp_local(const r::Type& type);
    r::Local& get_local(std::string_view name);
+   r::Temporary& add_temporary(const r::Expression* operation_ptr, const r::Type& type);
+   r::Temporary& get_temporary(const r::Expression* operation_ptr);
 public:
    r::Local* try_get_local(std::string_view name);
 private:
+   r::Temporary* try_get_temporary(const r::Expression* operation_ptr);
    void generate_local(r::Local& local, llvm::Value* llvm_dynamic_array_size = nullptr);
+   void generate_temporary(r::Temporary& temporary, llvm::Value* llvm_dynamic_array_size = nullptr);
    llvm::AllocaInst* generate_alloca(llvm::Type* llvm_type, std::string_view name = "temp", llvm::Value* llvm_dynamic_array_size = nullptr);
 
    // local.cpp
@@ -278,6 +282,7 @@ private:
    void generate_desruct_statement(const r::Operation& operation);
    void generate_destruct(const r::Expression& expression);
    void generate_destruct(r::Local& local);
+   void generate_destruct(r::Temporary& temporary);
    void generate_autodestruct_object(r::Object& object, llvm::Value* llvm_object_location);
    void generate_autodestruct_scope();
    void generate_autodestruct_frame();

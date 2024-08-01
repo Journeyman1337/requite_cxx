@@ -90,36 +90,33 @@ void Builder::finish_frame()
     this->local_table.clear();
 }
 
- r::Local& Builder::add_local(std::string_view name, const r::Type& type)
- {
-    assert(!this->scopes.empty());
-    if (this->local_table.contains(name))
+void Builder::clear_temporaries()
+{
+    for (r::Temporary& temporary : this->temporary_table)
     {
-        throw std::runtime_error("duplicate local variable with name.");
+        this->generate_destruct(temporary);
     }
-    std::unique_ptr<r::Local>& local_ptr = this->locals.emplace_back();
-    local_ptr = std::make_unique<r::Local>();
-    r::Local& local = *local_ptr.get();
-    local.name = name;
-    local.type = type;
-    this->local_table[name] = &local;
-    llvm::SmallVector<std::size_t>& back_scope = this->scopes.back();
-    back_scope.push_back(this->locals.size() - 1UZ);
-    return local;
- }
+    this->temporary_table.clear();
+}
 
-  r::Local& Builder::add_temp_local(const r::Type& type)
- {
-    assert(!this->scopes.empty());
-    std::unique_ptr<r::Local>& local_ptr = this->locals.emplace_back();
-    local_ptr = std::make_unique<r::Local>();
-    r::Local& local = *local_ptr.get();
-    local.type = type;
-    local.name = "temp";
-    llvm::SmallVector<std::size_t>& back_scope = this->scopes.back();
-    back_scope.push_back(this->locals.size() - 1UZ);
-    return local;
- }
+
+r::Local& Builder::add_local(std::string_view name, const r::Type& type)
+{
+assert(!this->scopes.empty());
+if (this->local_table.contains(name))
+{
+    throw std::runtime_error("duplicate local variable with name.");
+}
+std::unique_ptr<r::Local>& local_ptr = this->locals.emplace_back();
+local_ptr = std::make_unique<r::Local>();
+r::Local& local = *local_ptr.get();
+local.name = name;
+local.type = type;
+this->local_table[name] = &local;
+llvm::SmallVector<std::size_t>& back_scope = this->scopes.back();
+back_scope.push_back(this->locals.size() - 1UZ);
+return local;
+}
 
 r::Local* Builder::try_get_local(std::string_view name)
 {
@@ -140,6 +137,28 @@ r::Local& Builder::get_local(std::string_view name)
     return *local;
 }
 
+r::Temporary* Builder::try_get_temporary(const r::Expression* expression_ptr)
+{
+    if (!this->temporary_table.contains(expression_ptr))
+    {
+        return nullptr;
+    }
+    return &this->temporary_table[expression_ptr];
+}
+
+r::Temporary& Builder::add_temporary(const r::Expression* expression_ptr, const r::Type& type)
+{
+    assert(!this->temporary_table.contains(expression_ptr));
+    return this->temporary_table[expression_ptr];
+}
+
+r::Temporary& Builder::get_temporary(const r::Expression* expression_ptr)
+{
+    r::Temporary* temporary = this->try_get_temporary(expression_ptr);
+    assert(temporary != nullptr);
+    return *temporary;
+}
+
 void Builder::generate_local(r::Local& local, llvm::Value* llvm_dynamic_array_size)
 {
     assert(local.llvm_alloca == nullptr);
@@ -154,6 +173,22 @@ void Builder::generate_local(r::Local& local, llvm::Value* llvm_dynamic_array_si
             llvm_dynamic_array_size
         );
     local.llvm_dynamic_array_size = llvm_dynamic_array_size;
+}
+
+void Builder::generate_temporary(r::Temporary& temporary, llvm::Value* llvm_dynamic_array_size)
+{
+    assert(temporary.llvm_alloca == nullptr);
+    llvm::Type* llvm_type =
+        this->resolver.get_llvm_type(
+            temporary.type
+        );
+    temporary.llvm_alloca =
+        this->generate_alloca(
+            llvm_type,
+            "_____temp",
+            llvm_dynamic_array_size
+        );
+    temporary.llvm_dynamic_array_size = llvm_dynamic_array_size;
 }
 
 llvm::AllocaInst* Builder::generate_alloca(llvm::Type* llvm_type, std::string_view name, llvm::Value* llvm_dynamic_array_size)

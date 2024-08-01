@@ -61,6 +61,29 @@ void Builder::generate_destruct(r::Local& local)
     );
 }
 
+void Builder::generate_destruct(r::Temporary& temporary)
+{
+    if (!temporary.type.get_is_object())
+    {
+        return;
+    }
+    r::Object& object = temporary.type.get_object();
+    if (object.get_has_destructor())
+    {
+        r::Procedure& destructor = object.get_destructor();
+        this->llvm_builder->
+            CreateCall(
+                destructor.llvm_function,
+                {temporary.llvm_alloca},
+                "destruct"
+            );
+    }
+    this->generate_autodestruct_object(
+        object,
+        temporary.llvm_alloca
+    );
+}
+
 void Builder::generate_autodestruct_object(r::Object& object, llvm::Value* llvm_object_location)
 {
     for (std::unique_ptr<r::Property>& property_ptr : object.properties)
