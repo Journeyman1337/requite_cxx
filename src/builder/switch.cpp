@@ -114,6 +114,7 @@ r::BreakType Builder::generate_case_statement(const r::Operation& operation, r::
         if (case_operation.opcode == r::Opcode::FALL_THROUGH)
         {
             assert(case_operation.branches.empty());
+            this->pop_scope();
             return r::BreakType::FALL_THROUGH;
         }
         break_type =
