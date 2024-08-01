@@ -13,10 +13,6 @@ namespace r {
 void Builder::generate_infinite_loop_statement(const r::Operation& operation)
 {
     assert(operation.opcode == r::Opcode::INFINITE_LOOP);
-    if (operation.branches.empty())
-    {
-        return;
-    }
     this->push_scope();
     llvm::BasicBlock* llvm_loop_block = this->create_block("infinite_loop");
     llvm::BasicBlock* llvm_merge_block = this->create_block("infinite_loop_merge");
