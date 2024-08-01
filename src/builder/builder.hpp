@@ -6,6 +6,7 @@
 
 #include <break_type.hpp>
 #include <local.hpp>
+#include <label.hpp>
 #include <resolver/resolver.hpp>
 
 #include <llvm/IR/Value.h>
@@ -15,6 +16,7 @@
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/Constants.h>
 #include <llvm/ADT/SmallVector.h>
+#include <llvm/ADT/StringMap.h>
 
 #include <memory>
 #include <map>
@@ -40,6 +42,7 @@ struct Builder final
    llvm::SmallVector<std::unique_ptr<r::Local>> locals{};
    llvm::SmallVector<llvm::SmallVector<std::size_t>> scopes{};
    std::map<std::string_view, r::Local*> local_table{};
+   llvm::StringMap<r::Label> label_table{};
 
    llvm::SmallVector<llvm::BasicBlock*> llvm_continue_stack{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_break_stack{};
@@ -120,7 +123,7 @@ private:
    void generate_arguments();
    void push_scope();
    void pop_scope();
-   void clear_frame();
+   void finish_frame();
    r::Local& add_local(std::string_view name, const r::Type& type);
    r::Local& add_temp_local(const r::Type& type);
    r::Local& get_local(std::string_view name);

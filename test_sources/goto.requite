@@ -1,0 +1,13 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+[entry_point
+    [if [false]
+        [label linux]
+        c:puts("Hello, world!")
+    ]
+
+    c:puts("Goodbye, world!")
+    [goto linux]
+]

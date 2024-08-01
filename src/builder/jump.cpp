@@ -63,7 +63,18 @@ void Builder::generate_return_statement(const r::Operation& operation)
 void Builder::generate_goto_statement(const r::Operation& operation)
 {
     assert(operation.opcode == r::Opcode::GOTO);
-    // TODO
+    assert(!operation.branches.empty());
+    const r::Expression& name_expression = operation.branches.front();
+    assert(std::holds_alternative<std::string_view>(name_expression));
+    std::string_view name = std::get<std::string_view>(name_expression);
+    r::Label& label = this->label_table[name];
+    if (label.llvm_block == nullptr)
+    {
+        label.llvm_block = this->create_block("name");
+    }
+    this->llvm_builder->CreateBr(
+        label.llvm_block
+    );
 }
 
 void Builder::generate_break_statement(const r::Operation& operation)
@@ -89,7 +100,30 @@ void Builder::generate_continue_statement(const r::Operation& operation)
 void Builder::generate_label_statement(const r::Operation& operation)
 {
     assert(operation.opcode == r::Opcode::LABEL);
-    // TODO
+    assert(!operation.branches.empty());
+    const r::Expression& name_expression = operation.branches.front();
+    assert(std::holds_alternative<std::string_view>(name_expression));
+    std::string_view name = std::get<std::string_view>(name_expression);
+    r::Label& label = this->label_table[name];
+    if (label.llvm_block == nullptr)
+    {
+        label.llvm_block = this->create_block(name);
+        label.is_placed = true;
+    }
+    else
+    {
+        if (label.is_placed)
+        {
+            throw std::runtime_error("label of name must exist in only one location within frame.");
+        }
+        label.is_placed = true;
+    }
+    this->llvm_builder->
+        CreateBr(
+            label.llvm_block
+        );
+    this->set_current_block(label.llvm_block);
+
 }
 
 }

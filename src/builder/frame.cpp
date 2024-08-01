@@ -75,8 +75,16 @@ void Builder::pop_scope()
     this->scopes.pop_back();
 }
 
-void Builder::clear_frame()
+void Builder::finish_frame()
 {
+    for (const llvm::StringMapEntry<r::Label>& label : this->label_table)
+    {
+        if (!label.second.is_placed)
+        {
+            throw std::runtime_error("goto label must exist.");
+        }
+    }
+    this->label_table.clear();
     this->locals.clear();
     this->scopes.clear();
     this->local_table.clear();

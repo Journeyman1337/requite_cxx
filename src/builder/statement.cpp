@@ -81,7 +81,7 @@ r::BreakType Builder::generate_statement(const r::Operation& operation)
             break;
         case r::Opcode::GOTO:
             this->generate_goto_statement(operation);
-            break;
+            return r::BreakType::GOTO;
         case r::Opcode::INFINITE_LOOP:
             this->generate_infinite_loop_statement(operation);
             break;
