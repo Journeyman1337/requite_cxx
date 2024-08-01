@@ -212,6 +212,7 @@ void Builder::generate_body(r::Procedure& procedure)
 
     this->generate_arguments();
 
+    r::BreakType break_type = r::BreakType::NONE;
     for (
         const r::Expression& expression :
         procedure.declaration->branches |
@@ -220,15 +221,22 @@ void Builder::generate_body(r::Procedure& procedure)
     {
         assert(std::holds_alternative<r::Operation>(expression));
         const r::Operation& operation = std::get<r::Operation>(expression);
-        this->generate_statement(operation);
+        break_type = this->generate_statement(operation);
+        if (break_type != r::BreakType::NONE)
+        {
+            break;
+        }
     }
 
-    this->pop_scope();
+    if (break_type == r::BreakType::NONE)
+    {
+        this->generate_appended_return(procedure);
+    }
 
-    this->generate_appended_return(procedure);    
+    this->pop_scope(); 
 
     assert(this->scopes.empty());
-    this->clear_frame();
+    this->finish_frame();
     this->current_block = nullptr;
     this->llvm_builder->ClearInsertionPoint();
 }
@@ -236,65 +244,25 @@ void Builder::generate_body(r::Procedure& procedure)
 void Builder::generate_appended_return(r::Procedure& procedure)
 {
     assert(procedure.declaration != nullptr);
-    bool append_return = false;
-    if (!procedure.get_has_body())
+    llvm::BasicBlock* return_block =
+    this->create_block(
+        "appended_return"
+    );
+    this->llvm_builder->CreateBr(return_block);
+    this->set_current_block(return_block);
+    if (procedure.category == r::ProcedureCategory::ENTRY_POINT)
     {
-        append_return = true;
+        this->llvm_builder->CreateRet(
+            this->llvm_builder->getInt32(0)
+        );
+    }
+    else if (procedure.return_type.get_is_void())
+    {
+        this->llvm_builder->CreateRetVoid();
     }
     else
     {
-        const r::Expression& last_expression = procedure.declaration->branches.back();
-        if (std::holds_alternative<r::Operation>(last_expression))
-        {
-            const r::Operation& last_operation = std::get<r::Operation>(last_expression);
-            if (last_operation.opcode != r::Opcode::RETURN)
-            {
-                if (procedure.return_type.get_is_void())
-                {
-                    append_return = true;
-                }
-                else if (procedure.category == r::ProcedureCategory::ENTRY_POINT)
-                {
-                    append_return = true;
-                }
-            }
-        }
-        else if (procedure.return_type.get_is_void())
-        {
-            append_return = true;
-        }
-        else if (procedure.category == r::ProcedureCategory::ENTRY_POINT)
-        {
-            append_return = true;
-        }
-        else
-        {
-            r::unreachable();
-        }
-    }
-
-    if (append_return)
-    {
-        llvm::BasicBlock* return_block =
-            this->create_block(
-                "appended_return"
-            );
-        this->llvm_builder->CreateBr(return_block);
-        this->set_current_block(return_block);
-        if (procedure.category == r::ProcedureCategory::ENTRY_POINT)
-        {
-            this->llvm_builder->CreateRet(
-                this->llvm_builder->getInt32(0)
-            );
-        }
-        else if (procedure.return_type.get_is_void())
-        {
-            this->llvm_builder->CreateRetVoid();
-        }
-        else
-        {
-            r::unreachable();
-        }
+        r::unreachable();
     }
 }
 
