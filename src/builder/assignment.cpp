@@ -85,26 +85,68 @@ void Builder::generate_assignment_statement(const r::Operation& operation)
             lhs_expression,
             expected_type
         );
-    llvm::Value* llvm_store_location =
+    llvm::Value* llvm_local_store =
         this->generate_store_location(
             store_location_expression,
             true
         );
     this->generate_value_assignment(
-        llvm_store_location,
+        llvm_local_store,
         llvm_value
     );
 }
 
-llvm::Value* Builder::generate_assignment_value_expression(const r::Operation& operation, const r::Type& type)
+llvm::Value* Builder::generate_assignment_value_expression(const r::Operation& operation, const r::Type& expected_type)
 {
     assert(operation.opcode == r::Opcode::EQUAL);
-    return nullptr;
+    assert(operation.branches.size() == 2UZ);
+    const r::Expression& store_location_expression = operation.branches.front();
+    r::Type deduced_thpe = this->resolver.deduce_type(store_location_expression, this);
+    this->resolver.check_type_assignable_to_type(deduced_thpe, expected_type);
+    const r::Expression& lhs_expression = operation.branches.back();
+    llvm::Value* llvm_value =
+        this->generate_value_expression(
+            lhs_expression,
+            expected_type
+        );
+    llvm::Value* llvm_local_store =
+        this->generate_store_location(
+            store_location_expression,
+            true
+        );
+    this->generate_value_assignment(
+        llvm_local_store,
+        llvm_value
+    );
+    return llvm_value;
 }
 
-void Builder::generate_assignment_store_expression(const r::Operation& operation, llvm::Value* llvm_store, const r::Type& type)
+void Builder::generate_assignment_store_expression(const r::Operation& operation, llvm::Value* llvm_store, const r::Type& expected_type)
 {
     assert(operation.opcode == r::Opcode::EQUAL);
+    assert(operation.branches.size() == 2UZ);
+    const r::Expression& store_location_expression = operation.branches.front();
+    r::Type deduced_thpe = this->resolver.deduce_type(store_location_expression, this);
+    this->resolver.check_type_assignable_to_type(deduced_thpe, expected_type);
+    const r::Expression& lhs_expression = operation.branches.back();
+    llvm::Value* llvm_value =
+        this->generate_value_expression(
+            lhs_expression,
+            expected_type
+        );
+    llvm::Value* llvm_local_store =
+        this->generate_store_location(
+            store_location_expression,
+            true
+        );
+    this->generate_value_assignment(
+        llvm_local_store,
+        llvm_value
+    );
+    this->generate_value_assignment(
+        llvm_store,
+        llvm_value
+    );
 }
 
 }
