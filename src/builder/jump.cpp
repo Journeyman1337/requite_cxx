@@ -8,6 +8,8 @@
 #include <procedure.hpp>
 #include <type.hpp>
 #include <binary.hpp>
+#include <utility.hpp>
+#include <string_utility.hpp>
 
 #include <cassert>
 
@@ -80,21 +82,77 @@ void Builder::generate_goto_statement(const r::Operation& operation)
 void Builder::generate_break_statement(const r::Operation& operation)
 {
     assert(operation.opcode == r::Opcode::BREAK);
-    llvm::BasicBlock* llvm_break_block = this->llvm_break_stack.back();
-    this->llvm_builder->
-        CreateBr(
-            llvm_break_block
-        );
+    if (operation.branches.empty())
+    {
+        llvm::BasicBlock* llvm_break_block = this->llvm_break_stack.back();
+        this->llvm_builder->
+            CreateBr(
+                llvm_break_block
+            );
+    }
+    else if (operation.branches.size() == 1UZ)
+    {
+        const r::Expression& count_expression = operation.branches.back();
+        assert(std::holds_alternative<r::Literal>(count_expression));
+        const r::Literal& count_literal = std::get<r::Literal>(count_expression);
+        assert(count_literal.type == r::LiteralType::NUMBER);
+        std::uint64_t count = r::to_number(count_literal.text);
+        if (count == 0)
+        {
+            throw std::runtime_error("break count must not be 0.");
+        }
+        if (count >= this->llvm_break_stack.size())
+        {
+            throw std::runtime_error("break count must not be larger than break stack size.");
+        }
+        llvm::BasicBlock* llvm_break_block = this->llvm_break_stack[this->llvm_break_stack.size() - 1UZ - count];
+        this->llvm_builder->
+            CreateBr(
+                llvm_break_block
+            );
+    }
+    else
+    {
+        r::unreachable();
+    }
 }
 
 void Builder::generate_continue_statement(const r::Operation& operation)
 {
     assert(operation.opcode == r::Opcode::CONTINUE);
-    llvm::BasicBlock* llvm_continue_block = this->llvm_continue_stack.back();
-    this->llvm_builder->
-        CreateBr(
-            llvm_continue_block
-        );
+    if (operation.branches.empty())
+    {
+        llvm::BasicBlock* llvm_continue_block = this->llvm_continue_stack.back();
+        this->llvm_builder->
+            CreateBr(
+                llvm_continue_block
+            );
+    }
+    else if (operation.branches.size() == 1UZ)
+    {
+        const r::Expression& count_expression = operation.branches.back();
+        assert(std::holds_alternative<r::Literal>(count_expression));
+        const r::Literal& count_literal = std::get<r::Literal>(count_expression);
+        assert(count_literal.type == r::LiteralType::NUMBER);
+        std::uint64_t count = r::to_number(count_literal.text);
+        if (count == 0)
+        {
+            throw std::runtime_error("continue count must not be 0.");
+        }
+        if (count >= this->llvm_continue_stack.size())
+        {
+            throw std::runtime_error("continue count must not be larger than continue stack size.");
+        }
+        llvm::BasicBlock* llvm_continue_block = this->llvm_continue_stack[this->llvm_break_stack.size() - 1UZ - count];
+        this->llvm_builder->
+            CreateBr(
+                llvm_continue_block
+            );
+    }
+    else
+    {
+        r::unreachable();
+    }
 }
 
 void Builder::generate_label_statement(const r::Operation& operation)
