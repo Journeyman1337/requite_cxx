@@ -15,7 +15,6 @@ void Builder::generate_while_statement(const r::Operation& operation)
 {
     assert(operation.opcode == r::Opcode::WHILE);
     assert(operation.branches.size() >= 1UZ);
-    this->push_scope();
     const r::Expression& while_expression = operation.branches.front();
     llvm::BasicBlock* llvm_continue_block = this->create_block("while_continue");
     llvm::BasicBlock* llvm_body_block = this->create_block("while_body");
