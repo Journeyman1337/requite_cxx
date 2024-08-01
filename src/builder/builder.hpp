@@ -19,7 +19,6 @@
 #include <llvm/ADT/StringMap.h>
 
 #include <memory>
-#include <map>
 #include <cstddef>
 
 namespace r {
@@ -41,11 +40,12 @@ struct Builder final
    // frame
    llvm::SmallVector<std::unique_ptr<r::Local>> locals{};
    llvm::SmallVector<llvm::SmallVector<std::size_t>> scopes{};
-   std::map<std::string_view, r::Local*> local_table{};
+   llvm::StringMap<r::Local*> local_table{};
    llvm::StringMap<r::Label> label_table{};
-
+   llvm::IndexedMap<r::Temporary> temporary_table{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_continue_stack{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_break_stack{};
+
    std::unique_ptr<llvm::IRBuilder<>> llvm_builder{};
    llvm::BasicBlock* current_block = nullptr;
 
