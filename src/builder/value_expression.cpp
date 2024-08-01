@@ -58,8 +58,6 @@ llvm::Value* Builder::generate_value_expression(const r::Expression& expression,
         const r::Operation& operation = std::get<r::Operation>(expression);
         switch (operation.opcode)
         {
-            case r::Opcode::ACCESS_MEMBER:
-                return this->generate_access_member_value_expression(operation, expected_type);
             case r::Opcode::LOCAL:
                 return this->generate_local_value_expression(operation, nullptr, expected_type);
             case r::Opcode::MINUS:
@@ -130,8 +128,8 @@ llvm::Value* Builder::generate_value_expression(const r::Expression& expression,
                 return this->generate_bit_cast_value_expression(operation, expected_type);
             case r::Opcode::ACCESS_TABLE:
                 return this->generate_access_table_value_expression(operation, expected_type);
-            //case r::Opcode::ACCESS_MEMBER:
-            //    return this->generate_access_member_value_expression(operation, expected_type);
+            case r::Opcode::ACCESS_MEMBER:
+                return this->generate_access_member_value_expression(operation, expected_type);
             case r::Opcode::DEREFERENCE:
                 return this->generate_dereference_value_expression(operation, expected_type);
             case r::Opcode::INDEX_INTO:
