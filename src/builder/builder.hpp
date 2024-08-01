@@ -261,6 +261,7 @@ private:
    void generate_while_statement(const r::Operation& operation);
 
    // call.cpp
+   void generate_call_arguments(r::Procedure& callee, const r::Operation& operation, llvm::SmallVector<llvm::Value*>& llvm_arguments);
    void generate_call_statement(const r::Operation& operation);
    llvm::Value* generate_call_value_expression(const r::Operation& operation, const r::Type& expected_type);
    void generate_call_store_expression(const r::Operation& operation, llvm::Value* llvm_store, const r::Type& expected_type);
