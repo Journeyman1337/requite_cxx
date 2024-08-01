@@ -31,7 +31,6 @@ llvm::Value* Builder::generate_store_location(const r::Expression& expression, b
     if (std::holds_alternative<std::string_view>(expression))
     {
         std::string_view name = std::get<std::string_view>(expression);
-        // TODO support other kinds of things with names.
         r::Local& local = this->get_local(name);
         if (is_assigning)
         {
