@@ -60,6 +60,7 @@ void Builder::generate_condition_statement(const r::Operation& operation)
                     llvm_if_block,
                     llvm_else_block
                 );
+            this->clear_temporaries();
             this->set_current_block(llvm_if_block);
             this->push_scope();
             r::BreakType break_type = r::BreakType::NONE;

@@ -49,6 +49,7 @@ void Builder::generate_for_statement(const r::Operation& operation)
             llvm_body_block,
             llvm_merge_block
         );
+    this->clear_temporaries();
     this->set_current_block(llvm_body_block);
     this->push_scope();
     r::BreakType break_type = r::BreakType::NONE;
