@@ -59,6 +59,7 @@ void Builder::generate_call_statement(const r::Operation& operation)
             { // deduce variadic argument type.
                 assert(callee.has_variadic_arguments);
                 arg_type = this->resolver.deduce_type(arg_expression, this);
+                arg_type.clear_literals();
             }
             else
             {
