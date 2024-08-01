@@ -7,6 +7,7 @@
 #include <break_type.hpp>
 #include <local.hpp>
 #include <label.hpp>
+#include <temporary.hpp>
 #include <resolver/resolver.hpp>
 
 #include <llvm/IR/Value.h>
@@ -17,6 +18,7 @@
 #include <llvm/IR/Constants.h>
 #include <llvm/ADT/SmallVector.h>
 #include <llvm/ADT/StringMap.h>
+#include <llvm/ADT/IndexedMap.h>
 
 #include <memory>
 #include <cstddef>
@@ -42,7 +44,7 @@ struct Builder final
    llvm::SmallVector<llvm::SmallVector<std::size_t>> scopes{};
    llvm::StringMap<r::Local*> local_table{};
    llvm::StringMap<r::Label> label_table{};
-   llvm::IndexedMap<r::Temporary> temporary_table{};
+   llvm::IndexedMap<r::Temporary, std::size_t> temporary_table{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_continue_stack{};
    llvm::SmallVector<llvm::BasicBlock*> llvm_break_stack{};
 
