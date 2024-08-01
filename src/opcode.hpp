@@ -104,7 +104,6 @@ enum class Opcode
     SWITCH,
     THIS,
     TILDE,
-    TILDE_EQUAL,
     TRUE,
     TRUNCATE,
     TYPE_ALIAS,

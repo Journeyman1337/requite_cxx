@@ -404,6 +404,9 @@ void Module::parse_ast()
                     case '?':
                         this->char_i++;
                         return r::Opcode::QUESTION;
+                    case '~':
+                        this->char_i++;
+                        return r::Opcode::TILDE;
                     default:
                         if (std::isdigit(this->get_cur_char()))
                         {

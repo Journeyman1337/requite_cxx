@@ -51,7 +51,7 @@ r::BreakType Builder::generate_statement(const r::Operation& operation)
             this->generate_call_statement(operation);
             break;
         case r::Opcode::CAROT_EQUAL:
-            this->generate_bitwise_complement_assignment_statement(operation);
+            this->generate_bitwise_xor_assignment_statement(operation);
             break;
         case r::Opcode::CONDITION:
             this->generate_condition_statement(operation);
@@ -114,9 +114,6 @@ r::BreakType Builder::generate_statement(const r::Operation& operation)
             break;
         case r::Opcode::SWITCH:
             this->generate_switch_statement(operation);
-            break;
-        case r::Opcode::TILDE_EQUAL:
-            this->generate_bitwise_complement_assignment_statement(operation);
             break;
         case r::Opcode::UNREACHABLE:
             this->generate_unreachable_statement(operation);

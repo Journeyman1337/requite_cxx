@@ -203,8 +203,6 @@ std::string_view to_string(r::Opcode opcode)
             return "this";
         case r::Opcode::TILDE:
             return "~";
-        case r::Opcode::TILDE_EQUAL:
-            return "~=";
         case r::Opcode::TRUE:
             return "true";
         case r::Opcode::TRUNCATE:
@@ -364,7 +362,6 @@ r::Opcode to_opcode(std::string_view str) {
             {"switch", r::Opcode::SWITCH},
             {"this", r::Opcode::THIS},
             {"~", r::Opcode::TILDE},
-            {"~=", r::Opcode::TILDE_EQUAL},
             {"true", r::Opcode::TRUE},
             {"truncate", r::Opcode::TRUNCATE},
             {"type_alias", r::Opcode::TYPE_ALIAS},

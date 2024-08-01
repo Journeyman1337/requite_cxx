@@ -114,8 +114,6 @@ llvm::Value* Builder::generate_value_expression(const r::Expression& expression,
                 return this->generate_bitwise_xor_assignment_value_expression(operation, expected_type);
             case r::Opcode::TILDE:
                 return this->generate_bitwise_complement_value_expression(operation, expected_type);
-            case r::Opcode::TILDE_EQUAL:
-                return this->generate_bitwise_complement_assignment_value_expression(operation, expected_type);
             case r::Opcode::EQUAL:
                 return this->generate_assignment_value_expression(operation, expected_type);
             case r::Opcode::QUESTION:

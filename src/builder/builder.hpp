@@ -218,8 +218,6 @@ private:
 
    // bitwise_complement.cpp
    llvm::Value* generate_bitwise_complement_value_expression(const r::Operation& operation, const r::Type& expected_type);
-   void generate_bitwise_complement_assignment_statement(const r::Operation& operation);
-   llvm::Value* generate_bitwise_complement_assignment_value_expression(const r::Operation& operation, const r::Type& expected_type);
 
    // assignment.cpp
    bool get_is_indeterminate_value(const r::Expression& expression);
