@@ -135,8 +135,8 @@ private:
 
    // local.cpp
    void generate_local_statement(const r::Operation& operation, const r::Operation* attributes_ptr = nullptr);
-   llvm::Value* generate_local_value_expression(const r::Operation& operation, const r::Type& expected_type);
-   void generate_local_store_expression(const r::Operation& operation, llvm::Value* llvm_store, const r::Type& expected_type);
+   llvm::Value* generate_local_value_expression(const r::Operation& operation, const r::Operation* attributes_ptr, const r::Type& expected_type);
+   void generate_local_store_expression(const r::Operation& operation, llvm::Value* llvm_store, const r::Operation* attributes_ptr, const r::Type& expected_type);
 
    // constant.cpp
    llvm::Value* generate_primitive_literal(const r::Literal& literal, bool is_negative, const r::Type& expected_type);

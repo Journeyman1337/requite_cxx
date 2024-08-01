@@ -22,7 +22,6 @@ llvm::Value* Builder::generate_value_expression(const r::Expression& expression,
     if (std::holds_alternative<std::string_view>(expression))
     {
         std::string_view name = std::get<std::string_view>(expression);
-        // TODO support other kinds of things with names.
         r::Local& local = this->get_local(name);
         this->resolver.check_type_assignable_to_type(local.type, expected_type);
         return
@@ -62,7 +61,7 @@ llvm::Value* Builder::generate_value_expression(const r::Expression& expression,
             case r::Opcode::ACCESS_MEMBER:
                 return this->generate_access_member_value_expression(operation, expected_type);
             case r::Opcode::LOCAL:
-                return this->generate_local_value_expression(operation, expected_type);
+                return this->generate_local_value_expression(operation, nullptr, expected_type);
             case r::Opcode::MINUS:
                 if (operation.branches.size() == 1UZ)
                 {
