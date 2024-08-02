@@ -1,0 +1,39 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+// TODO implement this in the compiler.
+
+// objects are unpacked if no [packed] attribute exists.
+// can explicitly say this with [unpacked] attribute, but this is not necessary.
+[object NotDefaultPacked
+    [property r:i32 x 0]
+    [property r:i16 y 0]
+]
+
+[packed],
+[object DefaultPacked
+    [property r:i32 x 0]
+    [property r:i16 y 0]
+]
+
+[entry_point
+
+    // The attribute here undoes the default and the type of this local is unpacked.
+    [local x [unpacked],DefaultPacked{}]
+
+    // the type of y is deduced from the return of the unpack operation, which is a packed version of DefaultPacked.
+    [local y [pack x]]
+
+    // use reflection to determine if x has a packed type.
+    // this is calculation is done at compile time!
+    [if [is_packed x]
+        c:puts("x is packed")
+    ]
+
+    // you can also use is_packed opcode with types.
+    [if [is_packed DefaultPacked]
+        c:puts("DefaultPacked is packed.")
+    ]
+
+]
