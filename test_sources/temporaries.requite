@@ -11,13 +11,19 @@
         c:printf("Hello, %s!\n" [this].location)
     ]
 
-    [method print_goodbye r:void
+    [destructor
         c:printf("Goodbye, %s!\n" [this].location)
+    ]
+
+    [method print_location r:void
+        c:printf("I'm on %s!\n" [this].location)
     ]
 
 ]
 
 [entry_point
+    // the following are constructed in place without being stored in a variable.
+    // temporaries are destructed after the statement is ended.
     object{"earth"}
-    object{"mars"}.print_goodbye()
+    object{"mars"}.print_location()
 ]
