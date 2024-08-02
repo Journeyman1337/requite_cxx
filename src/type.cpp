@@ -28,6 +28,11 @@ Type::Type(r::TypeRoot root)
     : root(root)
 {}
 
+Type::Type(r::TypeRoot root, std::initializer_list<r::Subtype> subtypes)
+    : root(root)
+    , subtypes(subtypes)
+{}
+
 constexpr std::array<std::size_t, 21UZ> LITERAL_INT_MAX_VALUE_DIGIT_COUNT_MINUS_ONE =
     {
         2UZ,
@@ -174,7 +179,7 @@ bool Type::get_is_primitive() const noexcept
 
 bool Type::get_is_special_type(r::SpecialType special_type) const noexcept
 {
-    if (this->get_is_pointer())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -196,6 +201,10 @@ bool Type::get_is_special_type(r::SpecialType special_type) const noexcept
 
 bool Type::get_is_pointer_to_codeunit() const noexcept
 {
+    if (this->subtypes.size() != 1UZ)
+    {
+        return false;
+    }
     if (!this->get_is_pointer())
     {
         return false;
@@ -227,11 +236,7 @@ bool Type::get_is_byte() const noexcept
 
 bool Type::get_is_numeric_primitive() const noexcept
 {
-    if (this->get_is_pointer())
-    {
-        return false;
-    }
-    else if (this->get_is_array())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -257,7 +262,7 @@ bool Type::get_is_numeric_primitive() const noexcept
 
 bool Type::get_is_integer() const noexcept
 {
-    if (this->get_is_pointer())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -274,7 +279,7 @@ bool Type::get_is_integer() const noexcept
 
 bool Type::get_is_signed_integer() const noexcept
 {
-    if (this->get_is_pointer())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -296,7 +301,7 @@ bool Type::get_is_signed_integer() const noexcept
 
 bool Type::get_is_unsigned_integer() const noexcept
 {
-    if (this->get_is_pointer())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -318,7 +323,7 @@ bool Type::get_is_unsigned_integer() const noexcept
 
 bool Type::get_is_floating_point() const noexcept
 {
-    if (this->get_is_pointer())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -335,7 +340,7 @@ bool Type::get_is_floating_point() const noexcept
 
 bool Type::get_is_void() const noexcept
 {
-    if (this->get_is_pointer())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -353,7 +358,7 @@ bool Type::get_is_void() const noexcept
 
 bool Type::get_is_bool() const noexcept
 {
-    if (this->get_is_pointer())
+    if (!this->subtypes.empty())
     {
         return false;
     }
@@ -373,6 +378,14 @@ bool Type::get_is_pointer() const noexcept
 {
     if (this->subtypes.empty())
     {
+        if (std::holds_alternative<r::SpecialType>(this->root))
+        {
+            r::SpecialType special_type = std::get<r::SpecialType>(this->root);
+            if (special_type == r::SpecialType::_NULL)
+            {
+                return true;    
+            }
+        }
         return false;
     }
     const r::Subtype& front_subtype = this->subtypes.front();
@@ -381,6 +394,24 @@ bool Type::get_is_pointer() const noexcept
         return false;
     }
     return true;
+}
+
+bool Type::get_is_null() const noexcept
+{
+    if (!this->subtypes.empty())
+    {
+        return false;
+    }
+    if (!std::holds_alternative<r::SpecialType>(this->root))
+    {
+        return false;
+    }  
+    r::SpecialType special_type = std::get<r::SpecialType>(this->root);
+    if (special_type == r::SpecialType::_NULL)
+    {
+        return true;
+    }
+    return false;
 }
 
 bool Type::get_is_array() const noexcept

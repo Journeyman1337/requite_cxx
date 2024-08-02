@@ -13,6 +13,7 @@
 #include <llvm/IR/Type.h>
 #include <llvm/ADT/SmallVector.h>
 
+#include <initializer_list>
 #include <variant>
 #include <cstddef>
 
@@ -32,6 +33,7 @@ struct Type final
 
     Type() noexcept = default;
     Type(r::TypeRoot root);
+    Type(r::TypeRoot root, std::initializer_list<r::Subtype> subtypes);
     Type(const r::Literal& literal);
 
     void add_pointer();
@@ -50,6 +52,7 @@ struct Type final
     bool get_is_bool() const noexcept;
     bool get_is_void() const noexcept;
     bool get_is_pointer() const noexcept;
+    bool get_is_null() const noexcept;
     bool get_is_array() const noexcept;
     std::size_t get_array_size() const noexcept;
     bool get_is_indexable() const noexcept;
@@ -78,10 +81,11 @@ const r::Type BYTE_TYPE = r::Type(r::SpecialType::BYTE);
 
 const r::Type VOID_TYPE = r::Type(r::SpecialType::VOID);
 
+const r::Type NULL_TYPE = r::Type(r::SpecialType::_NULL);
+
 const r::Type VARIADIC_ARGUMENTS_TYPE = r::Type(r::SpecialType::VARIADIC_ARGUMENTS);
 
 const r::Type SIGNED_32_BIT_INTEGER_TYPE = r::Type(r::Integer(r::IntegerType::SIGNED, 32UZ));
-
 
 bool operator==(const r::Subtype& lhs, const r::Subtype& rhs) noexcept;
 bool operator!=(const r::Subtype& lhs, const r::Subtype& rhs) noexcept;
