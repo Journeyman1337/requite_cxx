@@ -352,6 +352,12 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                             encoding
                         );
                 }
+                else if (operation.opcode == r::Opcode::BUILTIN_NULL)
+                {
+                    assert(operation.branches.empty());
+                    type.root =
+                        r::SpecialType::_NULL;
+                }
                 else if (operation.opcode == r::Opcode::ACCESS_TABLE)
                 {
                     expression_ptr = &this->resolve_table(operation);
@@ -498,6 +504,11 @@ r::Type Resolver::deduce_type(const r::Expression& expression, r::Builder* build
             object_type.add_pointer();
             return object_type;
         }
+        if (operation.opcode == r::Opcode::_NULL)
+        {
+            assert(operation.branches.empty());
+            return r::NULL_TYPE;
+        }
         if (r::get_is_math_opcode(operation.opcode))
         {
             return this->deduce_group_type(operation.branches, builder);
@@ -584,6 +595,18 @@ r::Type Resolver::deduce_group_type(const r::Type& type_a, const r::Type& type_b
             {
                 return non_literal_type;
             }
+        }
+    }
+    if (type_a.get_is_pointer() && type_b.get_is_pointer())
+    {
+        if (type_a.get_is_null() && type_b.get_is_null())
+        { // both are null.
+            return type_a;
+        }
+        if (type_a.get_is_null() || type_b.get_is_null())
+        { // only one is a null.
+            const r::Type& non_null_type = type_a.get_is_null() ? type_b : type_a;
+            return non_null_type;
         }
     }
     // TODO object types.
