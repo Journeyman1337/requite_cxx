@@ -4,9 +4,16 @@
 
 // TODO implement this in the compiler.
 
-// This type can be packed, but not always packed.
-[packable],
+// this type can be packed, but is not packed by default.
 [object Packable
+    [property r:i16 x 2]
+    [property r:i32 y 1]
+    [property r:i64 z 3]
+]
+
+// this type can never be packed.
+[no_pack],
+[object NotPackable
     [property r:i16 x 2]
     [property r:i32 y 1]
     [property r:i64 z 3]
