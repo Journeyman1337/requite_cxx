@@ -70,22 +70,31 @@ void Builder::generate_property_initializers(r::Procedure& procedure)
     for (std::unique_ptr<r::Property>& property_ptr : object.properties)
     {
         r::Property& property = *property_ptr.get();
+        const r::Expression& value_expression =
+            property.declaration->branches.at(
+                property.value_i
+            );
+        if (std::holds_alternative<r::Operation>(value_expression))
+        {
+            const r::Operation& value_operation = std::get<r::Operation>(value_expression);
+            if (value_operation.opcode == r::Opcode::INDETERMINATE_VALUE)
+            {
+                assert(value_operation.branches.empty());
+                continue;
+            }
+        }
         llvm::Value* llvm_store =
             this->generate_property_location(
                 object,
                 llvm_this,
                 property.name
             );
-        const r::Expression& expression =
-            property.declaration->branches.at(
-                property.value_i
-            );
         if (property.type.get_is_llvm_store_type())
         {
             assert(property.type.get_is_object()); // TODO support other types.
             r::Object& object = property.type.get_object();
             this->generate_store_expression(
-                expression,
+                value_expression,
                 llvm_store,
                 property.type
             );
@@ -94,7 +103,7 @@ void Builder::generate_property_initializers(r::Procedure& procedure)
         {
             llvm::Value* llvm_value =
                 this->generate_value_expression(
-                    expression,
+                    value_expression,
                     property.type
                 );
             this->generate_value_assignment(
