@@ -85,6 +85,7 @@ enum class Opcode
     MODULE,
     MODULUS,
     MODULUS_EQUAL,
+    NULL,
     OBJECT,
     OBJECT_EXTENSION,
     PIPE,
@@ -120,6 +121,7 @@ enum class Opcode
     BUILTIN_FLOATING_POINT,
     BUILTIN_INTEGER,
     BUILTIN_VOID,
+    BUILTIN_NULL,
 
     // attributes
     CALL_CONVENTION,

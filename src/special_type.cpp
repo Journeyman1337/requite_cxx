@@ -21,6 +21,8 @@ std::size_t get_bit_depth(r::SpecialType special_type)
             return 24UZ;
         case r::SpecialType::VOID:
             return 0UZ;
+        case r::SpecialType::NULL:
+            return 0UZ;
     }
     r::unreachable();
 }

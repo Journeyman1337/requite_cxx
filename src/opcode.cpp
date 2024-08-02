@@ -165,6 +165,8 @@ std::string_view to_string(r::Opcode opcode)
             return "%";
         case r::Opcode::MODULUS_EQUAL:
             return "%=";
+        case r::Opcode::NULL:
+            return "null";
         case r::Opcode::OBJECT:
             return "object";
         case r::Opcode::OBJECT_EXTENSION:
@@ -233,6 +235,8 @@ std::string_view to_string(r::Opcode opcode)
             return "builtin_integer";
         case r::Opcode::BUILTIN_VOID:
             return "builtin_void";
+        case r::Opcode::BUILTIN_NULL:
+            return "builtin_null"; 
 
         // attributes
         case r::Opcode::CALL_CONVENTION:
@@ -343,6 +347,7 @@ r::Opcode to_opcode(std::string_view str) {
             {"module", r::Opcode::MODULE},
             {"%", r::Opcode::MODULUS},
             {"%=", r::Opcode::MODULUS_EQUAL},
+            {"null", r::Opcode::NULL},
             {"object", r::Opcode::OBJECT},
             {"object_extension", r::Opcode::OBJECT_EXTENSION},
             {"|", r::Opcode::PIPE},
