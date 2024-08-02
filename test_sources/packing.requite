@@ -19,6 +19,17 @@
     [property r:i64 z 3]
 ]
 
+[object PackableAlt
+    // if PackableAlt is packed...
+    // the type of this property will also be packed.
+    [property Packable{}]
+    // the type of this property will not be packed.
+    [no_pack],
+    [property Packable{}]
+    // the type of this property will not be packed.
+    [property NotPackable{}]
+]
+
 [entry_point
 
     // this is not packed.
