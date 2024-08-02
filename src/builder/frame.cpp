@@ -102,20 +102,20 @@ void Builder::clear_temporaries()
 
 r::Local& Builder::add_local(std::string_view name, const r::Type& type)
 {
-assert(!this->scopes.empty());
-if (this->local_table.contains(name))
-{
-    throw std::runtime_error("duplicate local variable with name.");
-}
-std::unique_ptr<r::Local>& local_ptr = this->locals.emplace_back();
-local_ptr = std::make_unique<r::Local>();
-r::Local& local = *local_ptr.get();
-local.name = name;
-local.type = type;
-this->local_table[name] = &local;
-llvm::SmallVector<std::size_t>& back_scope = this->scopes.back();
-back_scope.push_back(this->locals.size() - 1UZ);
-return local;
+    assert(!this->scopes.empty());
+    if (this->local_table.contains(name))
+    {
+        throw std::runtime_error("duplicate local variable with name.");
+    }
+    std::unique_ptr<r::Local>& local_ptr = this->locals.emplace_back();
+    local_ptr = std::make_unique<r::Local>();
+    r::Local& local = *local_ptr.get();
+    local.name = name;
+    local.type = type;
+    this->local_table[name] = &local;
+    llvm::SmallVector<std::size_t>& back_scope = this->scopes.back();
+    back_scope.push_back(this->locals.size() - 1UZ);
+    return local;
 }
 
 r::Local* Builder::try_get_local(std::string_view name)
