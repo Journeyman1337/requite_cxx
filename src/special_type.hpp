@@ -14,7 +14,7 @@ enum class SpecialType
     BYTE,
     VARIADIC_ARGUMENTS,
     VOID,
-    NULL
+    _NULL
 };
 
 std::size_t get_bit_depth(r::SpecialType special_type);

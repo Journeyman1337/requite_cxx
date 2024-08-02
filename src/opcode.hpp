@@ -85,7 +85,7 @@ enum class Opcode
     MODULE,
     MODULUS,
     MODULUS_EQUAL,
-    NULL,
+    _NULL,
     OBJECT,
     OBJECT_EXTENSION,
     PIPE,
