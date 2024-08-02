@@ -29,4 +29,12 @@
         c:printf("%d " [index_into my_array x])
     
     ]
+    
+    c:puts("")
+
+    [= my_var_ptr [null]]
+
+    [if [== my_var_ptr [null]]
+        c:puts("its null!")    
+    ]
 ]
