@@ -4,36 +4,40 @@
 
 // TODO implement this in the compiler.
 
-// objects are unpacked if no [packed] attribute exists.
-// can explicitly say this with [unpacked] attribute, but this is not necessary.
-[object NotDefaultPacked
-    [property r:i32 x 0]
-    [property r:i16 y 0]
-]
-
-[packed],
-[object DefaultPacked
-    [property r:i32 x 0]
-    [property r:i16 y 0]
+// This type can be packed, but not always packed.
+[packable],
+[object Packable
+    [property r:i16 x 2]
+    [property r:i32 y 1]
+    [property r:i64 z 3]
 ]
 
 [entry_point
 
-    // The attribute here undoes the default and the type of this local is unpacked.
-    [local x [unpacked],DefaultPacked{}]
+    // this is not packed.
+    [local x Packable{}]
 
-    // the type of y is deduced from the return of the unpack operation, which is a packed version of DefaultPacked.
-    [local y [pack x]]
+    // this is packed.
+    [local y [packed],Packable{}]
 
-    // use reflection to determine if x has a packed type.
+    // a pointer to the packed struct.
+    [local y_ptr *[packed],Packable [address_of y]]
+
+    // the type of y is deduced from the return of the unpack operation, which is a packed version of Packable.
+    [local z [pack x]]
+    
+    // you can also upack something that is packed.
+    [= x [unpack y]]
+
+    // use reflection to determine if z has a packed type.
     // this is calculation is done at compile time!
-    [if [is_packed x]
-        c:puts("x is packed")
+    [if [is_packed z]
+        c:puts("z is packed.")
     ]
 
     // you can also use is_packed opcode with types.
-    [if [is_packed DefaultPacked]
-        c:puts("DefaultPacked is packed.")
+    [if [is_packed [packed],Packable]
+        c:puts("The type is packed.")
     ]
 
 ]
