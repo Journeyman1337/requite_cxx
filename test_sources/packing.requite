@@ -2,61 +2,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-// TODO implement this in the compiler.
-
-// this type can be packed, but is not packed by default.
-[can_pack],
-[object Packable
-    [property r:i16 x 2]
-    [property r:i32 y 1]
-    [property r:i64 z 3]
-]
-
-// this type can never be packed.
-[object NotPackable
-    [property r:i16 x 2]
-    [property r:i32 y 1]
-    [property r:i64 z 3]
-]
-
-[can_pack],
-[object PackableAlt
-    // if PackableAlt is packed...
-    // the type of this property will also be packed.
-    [property Packable{}]
-    // the type of this property will not be packed.
-    [no_pack],
-    [property Packable{}]
-    // the type of this property will not be packed.
-    [property NotPackable{}]
+// variables of this type have packed memory
+[packed],
+[object Packed
+    [property x r:i32 0]
+    [property y r:i64 0]
 ]
 
 [entry_point
 
-    // this is not packed.
-    [local x Packable{}]
-
-    // this is packed.
-    [local y [packed],Packable{}]
-
-    // a pointer to the packed struct.
-    [local y_ptr *[packed],Packable [address_of y]]
-
-    // the type of y is deduced from the return of the unpack operation, which is a packed version of Packable.
-    [local z [pack x]]
-    
-    // you can also upack something that is packed.
-    [= x [unpack y]]
-
-    // use reflection to determine if z has a packed type.
-    // this is calculation is done at compile time!
-    [if [is_packed z]
-        c:puts("z is packed.")
-    ]
-
-    // you can also use is_packed opcode with types.
-    [if [is_packed [packed],Packable]
-        c:puts("The type is packed.")
-    ]
+    [local object Packed{}]
 
 ]
