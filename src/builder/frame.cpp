@@ -153,10 +153,6 @@ r::Temporary* Builder::try_get_temporary(const r::Operation* operation_ptr)
 r::Temporary& Builder::add_temporary(const r::Operation* operation_ptr, const r::Type& type)
 {
     assert(!this->temporary_table.contains(operation_ptr));
-    if (type.get_has_null_root())
-    {
-        throw std::runtime_error("store types must not have null root.");
-    }
     r::Temporary& temporary = this->temporary_table[operation_ptr];
     temporary.type = type;
     return temporary;
