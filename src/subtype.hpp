@@ -17,6 +17,9 @@ struct Subtype final
     // must not be 0 for arrays. no unbounded arrays! (yet)
     std::size_t array_size = 0UZ;
 
+    constexpr Subtype() noexcept = default;
+    Subtype(r::QualifierFlagSet qualifiers) noexcept;
+
     void set_mutable(bool mutability) noexcept;
     void set_volatile(bool volatility) noexcept;
 };

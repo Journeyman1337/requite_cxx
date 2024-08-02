@@ -6,6 +6,10 @@
 
 namespace r {
 
+Subtype::Subtype(r::QualifierFlagSet qualifiers) noexcept
+    : qualifiers(qualifiers)
+{}
+
 void Subtype::set_mutable(bool mutability) noexcept
 {
     if (mutability)
