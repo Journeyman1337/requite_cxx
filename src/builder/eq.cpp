@@ -18,7 +18,7 @@ llvm::Value* Builder::generate_compare_eq_value_expression(const r::Operation& o
     assert(operation.branches.size() >= 2UZ);
     this->resolver.check_type_assignable_to_type(r::BOOL_TYPE, expected_type);
     r::Type argument_type = this->resolver.deduce_group_type(operation.branches, this);
-    if (argument_type.get_is_integer() || argument_type.get_is_bool())
+    if (argument_type.get_is_integer() || argument_type.get_is_bool() || argument_type.get_is_pointer())
     {
         std::size_t branch_i = 0UZ;
         const r::Expression& first_expression = operation.branches.at(branch_i++);
@@ -113,7 +113,7 @@ llvm::Value* Builder::generate_compare_neq_value_expression(const r::Operation& 
     assert(operation.branches.size() >= 2UZ);
     this->resolver.check_type_assignable_to_type(r::BOOL_TYPE, expected_type);
     r::Type argument_type = this->resolver.deduce_group_type(operation.branches, this);
-    if (argument_type.get_is_integer() || argument_type.get_is_bool())
+    if (argument_type.get_is_integer() || argument_type.get_is_bool() || argument_type.get_is_pointer())
     {
         std::size_t branch_i = 0UZ;
         const r::Expression& first_expression = operation.branches.at(branch_i++);
