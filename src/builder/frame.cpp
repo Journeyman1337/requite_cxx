@@ -92,7 +92,7 @@ void Builder::finish_frame()
 
 void Builder::clear_temporaries()
 {
-    for (llvm::detail::DenseMapPair<const r::Expression*, r::Temporary>& temporary_pair : this->temporary_table)
+    for (llvm::detail::DenseMapPair<const r::Operation*, r::Temporary>& temporary_pair : this->temporary_table)
     {
         this->generate_destruct(temporary_pair.second);
     }
@@ -137,24 +137,26 @@ r::Local& Builder::get_local(std::string_view name)
     return *local;
 }
 
-r::Temporary* Builder::try_get_temporary(const r::Expression* expression_ptr)
+r::Temporary* Builder::try_get_temporary(const r::Operation* operation_ptr)
 {
-    if (!this->temporary_table.contains(expression_ptr))
+    if (!this->temporary_table.contains(operation_ptr))
     {
         return nullptr;
     }
-    return &this->temporary_table[expression_ptr];
+    return &this->temporary_table[operation_ptr];
 }
 
-r::Temporary& Builder::add_temporary(const r::Expression* expression_ptr, const r::Type& type)
+r::Temporary& Builder::add_temporary(const r::Operation* operation_ptr, const r::Type& type)
 {
-    assert(!this->temporary_table.contains(expression_ptr));
-    return this->temporary_table[expression_ptr];
+    assert(!this->temporary_table.contains(operation_ptr));
+    r::Temporary& temporary = this->temporary_table[operation_ptr];
+    temporary.type = type;
+    return temporary;
 }
 
-r::Temporary& Builder::get_temporary(const r::Expression* expression_ptr)
+r::Temporary& Builder::get_temporary(const r::Operation* operation_ptr)
 {
-    r::Temporary* temporary = this->try_get_temporary(expression_ptr);
+    r::Temporary* temporary = this->try_get_temporary(operation_ptr);
     assert(temporary != nullptr);
     return *temporary;
 }

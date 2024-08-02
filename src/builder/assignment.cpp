@@ -55,6 +55,8 @@ llvm::Value* Builder::generate_store_location(const r::Expression& expression, b
                 return this->generate_access_member_location(operation);
             case r::Opcode::THIS:
                 return this->generate_this_location(operation);
+            case r::Opcode::CONSTRUCT:
+                return this->generate_construct_temporary_location(operation);
             default:
                 assert(false);
         }

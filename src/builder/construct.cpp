@@ -16,7 +16,21 @@ namespace r {
 void Builder::generate_construct_statement(const r::Operation& operation)
 {
     assert(operation.opcode == r::Opcode::CONSTRUCT);
-    // TODO
+    const r::Expression& type_expression = operation.branches.front();
+    r::Type type = this->resolver.resolve_type(type_expression);
+    type.resolve_type_alias();
+    if (type.get_is_primitive())
+    {
+        return; // do nothing.
+    }
+    assert(type.get_is_object());
+    r::Temporary& temporary = this->add_temporary(&operation, type);
+    this->generate_temporary(temporary);
+    this->generate_construct_store_expression(
+        operation,
+        temporary.llvm_alloca,
+        type
+    );
 }
 
 llvm::Value* Builder::generate_construct_value_expression(const r::Operation& operation, const r::Type& expected_type)
@@ -131,6 +145,18 @@ llvm::Value* Builder::generate_construct_value_expression(const r::Operation& op
         r::unreachable();
     }
     r::unreachable();
+}
+
+llvm::Value* Builder::generate_construct_temporary_location(const r::Operation& operation)
+{
+    assert(operation.opcode == r::Opcode::CONSTRUCT);
+    assert(!operation.branches.empty());
+    const r::Expression& type_expression = operation.branches.front();
+    r::Type type = this->resolver.resolve_type(type_expression);
+    r::Temporary& temporary = this->add_temporary(&operation, type);
+    this->generate_temporary(temporary);
+    this->generate_construct_store_expression(operation, temporary.llvm_alloca, type);
+    return temporary.llvm_alloca;
 }
 
 void Builder::generate_construct_store_expression(const r::Operation& operation, llvm::Value* llvm_store, const r::Type& expected_type)
