@@ -53,6 +53,7 @@ struct Type final
     bool get_is_void() const noexcept;
     bool get_is_pointer() const noexcept;
     bool get_is_null() const noexcept;
+    bool get_has_null_root() const noexcept;
     bool get_is_array() const noexcept;
     std::size_t get_array_size() const noexcept;
     bool get_is_indexable() const noexcept;

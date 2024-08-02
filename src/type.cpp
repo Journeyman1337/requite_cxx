@@ -402,6 +402,11 @@ bool Type::get_is_null() const noexcept
     {
         return false;
     }
+    return this->get_has_null_root();
+}
+
+bool Type::get_has_null_root() const noexcept
+{
     if (!std::holds_alternative<r::SpecialType>(this->root))
     {
         return false;
