@@ -37,6 +37,7 @@ target_sources(
         "member.cpp"
         "module.cpp"
         "mul.cpp"
+        "null.cpp"
         "object.cpp"
         "procedures.cpp"
         "rem.cpp"

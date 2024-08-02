@@ -136,6 +136,8 @@ llvm::Value* Builder::generate_value_expression(const r::Expression& expression,
                 return this->generate_address_of_value_expression(operation, expected_type);
             case r::Opcode::ACCESS_VARIADIC_ARGUMENT:
                 return this->generate_access_variadic_argument_value_expression(operation, expected_type);
+            case r::Opcode::_NULL:
+                return this->generate_null_value_expression(operation, expected_type);
             default:
                 break;
         }

@@ -318,6 +318,9 @@ private:
    llvm::Value* generate_access_variadic_argument_value_expression(const r::Operation& operation, const r::Type& expected_type);
    llvm::Value* generate_access_variadic_argument_store_expression(const r::Operation& operation, llvm::Value* llvm_store, const r::Type& expected_type);
    void generate_end_variadic_arguments_statement(const r::Operation& operation);
+
+   // null.cpp
+   llvm::Constant* generate_null_value_expression(const r::Operation& operation, const r::Type& expected_type);
 };
 
 }
