@@ -90,7 +90,7 @@ struct Resolver final
    void access_table(const r::Operation& operation, bool ignore_last);
    const r::Expression& resolve_table(const r::Operation& operation);
    void reset_table();
-   r::SymbolTable& get_current_table();
+   r::SymbolTable& get_current_table(); // get the current table for adding things while tabulating.
    r::ExportGroup& get_created_export_group(const r::Expression& expression);
    r::Symbol* try_get_symbol(const r::Expression& expression);
    r::Symbol* try_get_symbol(std::string_view name);
