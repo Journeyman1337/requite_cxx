@@ -107,10 +107,6 @@ r::Local& Builder::add_local(std::string_view name, const r::Type& type)
     {
         throw std::runtime_error("duplicate local variable with name.");
     }
-    if (type.get_has_null_root())
-    {
-        throw std::runtime_error("store types must not have null root.");
-    }
     std::unique_ptr<r::Local>& local_ptr = this->locals.emplace_back();
     local_ptr = std::make_unique<r::Local>();
     r::Local& local = *local_ptr.get();

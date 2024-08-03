@@ -27,10 +27,6 @@ void Builder::generate_prototype(r::Object& object)
     {
         assert(property_ptr.get() != nullptr);
         r::Property& property = *property_ptr.get();
-        if (property.type.get_has_null_root())
-        {
-            throw std::runtime_error("store types must not have null root.");
-        }
         if (property.type.get_is_object())
         {
             r::Object* property_object_ptr = std::get<r::Object*>(property.type.root);
@@ -105,6 +101,10 @@ void Builder::generate_property_initializers(r::Procedure& procedure)
         }
         else
         {
+            if (property.type.get_is_null())
+            {
+                this->check_is_null_value_expression(value_expression);
+            }
             llvm::Value* llvm_value =
                 this->generate_value_expression(
                     value_expression,

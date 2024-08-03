@@ -29,4 +29,23 @@ llvm::Constant* Builder::generate_null_value_expression(const r::Operation& oper
         );
 }
 
+void Builder::check_is_null_value_expression(const r::Expression& expression)
+{
+    const auto throw_invalid_null_value =
+        []()
+        {
+            throw std::runtime_error("variable of null type must be assigned a value of null.");
+        };
+    if (!std::holds_alternative<r::Operation>(expression))
+    {
+        throw_invalid_null_value();
+    }
+    const r::Operation& operation = std::get<r::Operation>(expression);
+    if (operation.opcode != r::Opcode::_NULL)
+    {
+        throw_invalid_null_value();
+    }
+    assert(operation.branches.empty());
+}
+
 }

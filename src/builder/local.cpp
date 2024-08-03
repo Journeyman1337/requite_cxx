@@ -65,6 +65,10 @@ void Builder::generate_local_statement(const r::Operation& operation, const r::O
             {
                 return;
             }
+            if (local_ptr->type.get_is_null())
+            {
+                this->check_is_null_value_expression(value_expression);
+            }
             llvm::Value* llvm_value =
                 this->generate_value_expression(
                         value_expression,

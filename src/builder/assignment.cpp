@@ -81,10 +81,14 @@ void Builder::generate_assignment_statement(const r::Operation& operation)
     assert(operation.branches.size() == 2UZ);
     const r::Expression& store_location_expression = operation.branches.front();
     r::Type expected_type = this->resolver.deduce_type(store_location_expression, this);
-    const r::Expression& lhs_expression = operation.branches.back();
+    const r::Expression& value_expression = operation.branches.back();
+    if (expected_type.get_is_null())
+    {
+        this->check_is_null_value_expression(value_expression);
+    }
     llvm::Value* llvm_value =
         this->generate_value_expression(
-            lhs_expression,
+            value_expression,
             expected_type
         );
     llvm::Value* llvm_local_store =
@@ -105,10 +109,14 @@ llvm::Value* Builder::generate_assignment_value_expression(const r::Operation& o
     const r::Expression& store_location_expression = operation.branches.front();
     r::Type deduced_thpe = this->resolver.deduce_type(store_location_expression, this);
     this->resolver.check_type_assignable_to_type(deduced_thpe, expected_type);
-    const r::Expression& lhs_expression = operation.branches.back();
+    const r::Expression& value_expression = operation.branches.back();
+    if (expected_type.get_is_null())
+    {
+        this->check_is_null_value_expression(value_expression);
+    }
     llvm::Value* llvm_value =
         this->generate_value_expression(
-            lhs_expression,
+            value_expression,
             expected_type
         );
     llvm::Value* llvm_local_store =
@@ -130,10 +138,14 @@ void Builder::generate_assignment_store_expression(const r::Operation& operation
     const r::Expression& store_location_expression = operation.branches.front();
     r::Type deduced_thpe = this->resolver.deduce_type(store_location_expression, this);
     this->resolver.check_type_assignable_to_type(deduced_thpe, expected_type);
-    const r::Expression& lhs_expression = operation.branches.back();
+    const r::Expression& value_expression = operation.branches.back();
+    if (expected_type.get_is_null())
+    {
+        this->check_is_null_value_expression(value_expression);
+    }
     llvm::Value* llvm_value =
         this->generate_value_expression(
-            lhs_expression,
+            value_expression,
             expected_type
         );
     llvm::Value* llvm_local_store =

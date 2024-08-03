@@ -321,6 +321,7 @@ private:
 
    // null.cpp
    llvm::Constant* generate_null_value_expression(const r::Operation& operation, const r::Type& expected_type);
+   void check_is_null_value_expression(const r::Expression& expression);
 };
 
 }
