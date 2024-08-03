@@ -322,6 +322,10 @@ private:
    // null.cpp
    llvm::Constant* generate_null_value_expression(const r::Operation& operation, const r::Type& expected_type);
    void check_is_null_value_expression(const r::Expression& expression);
+
+   // memcpy.cpp
+   void generate_memcpy_static(llvm::Value* llvm_source, llvm::Value* llvm_dest, std::size_t size);
+   void generate_memcpy(llvm::Value* llvm_source, llvm::Value* llvm_dest, llvm::Value* llvm_size);
 };
 
 }

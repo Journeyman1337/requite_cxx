@@ -35,6 +35,7 @@ target_sources(
         "logical.cpp"
         "lt.cpp"
         "member.cpp"
+        "memcpy.cpp"
         "module.cpp"
         "mul.cpp"
         "null.cpp"
