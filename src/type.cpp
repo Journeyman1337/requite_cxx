@@ -174,6 +174,10 @@ bool Type::get_is_primitive() const noexcept
     {
         return true;
     }
+    else if (special_type == r::SpecialType::_NULL)
+    {
+        return true;
+    }
     return false;
 }
 

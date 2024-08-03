@@ -65,6 +65,7 @@ llvm::IntegerType* Resolver::get_llvm_type(const r::Codeunit& codeunit)
 
 llvm::Type* Resolver::get_llvm_type(r::SpecialType special_type)
 {
+    llvm::Type* llvm_type = nullptr;
     switch (special_type)
     {
         case r::SpecialType::BOOL:
@@ -88,6 +89,14 @@ llvm::Type* Resolver::get_llvm_type(r::SpecialType special_type)
         case r::SpecialType::VOID:
             return
                 llvm::Type::getVoidTy(this->get_llvm_context());
+        case r::SpecialType::_NULL:
+            llvm_type = llvm::Type::getVoidTy(this->get_llvm_context());
+            llvm_type = 
+                llvm::PointerType::get(
+                    llvm_type,
+                    0
+                );
+            return llvm_type;
     }
     r::unreachable();
 }
