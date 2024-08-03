@@ -32,9 +32,15 @@
     
     c:puts("")
 
+    // [builtin_null] is special in that it can implicitly convert to all other
+    // pointer types. [builtin_null] values may only ever be [null]. if you try
+    // assigning something else, this results in a compiler error.
+    [local x [builtin_null] [null]]
+
     [= my_var_ptr [null]]
 
     [if [== my_var_ptr [null]]
         c:puts("its null!")    
     ]
+
 ]
