@@ -11,9 +11,9 @@
 
     [type_alias bool [builtin_bool]]
 
-    [type_alias iptr [builtin_integer signed 64]] // TODO use pointer_size
+    [type_alias iptr [builtin_integer signed [pointer_depth]]]
 
-    [type_alias uptr [builtin_integer unsigned 64]] // TODO use pointer_size
+    [type_alias uptr [builtin_integer unsigned [pointer_depth]]]
 
     [type_alias i8 [builtin_integer signed 8]]
 
