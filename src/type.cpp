@@ -552,6 +552,11 @@ void Type::set_volatile(bool volatility) noexcept
     }
 }
 
+void Type::set_literal() noexcept
+{
+    this->qualifiers.set(r::QualifierFlag::LITERAL);
+}
+
 bool Type::get_is_literal() const noexcept
 {
     return

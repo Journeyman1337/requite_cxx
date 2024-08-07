@@ -65,6 +65,7 @@ struct Type final
     const r::QualifierFlagSet& get_top_qualifiers() const noexcept;
     void set_mutable(bool mutability) noexcept;
     void set_volatile(bool volatility) noexcept;
+    void set_literal() noexcept;
     bool get_is_literal() const noexcept;
     void clear_literals() noexcept;
     bool get_is_type_alias() const noexcept;

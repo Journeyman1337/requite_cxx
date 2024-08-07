@@ -509,6 +509,17 @@ r::Type Resolver::deduce_type(const r::Expression& expression, r::Builder* build
             assert(operation.branches.empty());
             return r::NULL_TYPE;
         }
+        if (operation.opcode == r::Opcode::POINTER_SIZE)
+        {
+            r::Type type;
+            type.root =
+                r::Integer(
+                    r::IntegerType::UNSIGNED,
+                    this->get_pointer_bit_depth()
+                );
+            type.set_literal();
+            return type;
+        }
         if (r::get_is_math_opcode(operation.opcode))
         {
             return this->deduce_group_type(operation.branches, builder);
