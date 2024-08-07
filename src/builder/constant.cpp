@@ -43,6 +43,7 @@ llvm::Value* Builder::generate_primitive_literal(const r::Literal& literal, bool
         if (is_negative)
         {
             llvm_int.flipAllBits();
+            llvm_int += 1;
         }
         return
             llvm::ConstantInt::get(
