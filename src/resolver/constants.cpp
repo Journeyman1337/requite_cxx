@@ -68,7 +68,7 @@ llvm::APSInt Resolver::get_integer_constant(const r::Expression& expression, con
     return 
         llvm::APSInt(
             llvm_ap_int,
-            is_negative
+            expected_type.get_is_signed_integer()
         );
 }
 
