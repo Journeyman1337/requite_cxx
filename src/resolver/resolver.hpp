@@ -64,6 +64,7 @@ struct Resolver final
    r::Type deduce_type(const r::Expression& expression, r::Builder* builder = nullptr);
    r::Type deduce_group_type(std::span<const r::Expression> branch_group, r::Builder* builder = nullptr);
    r::Type deduce_group_type(const r::Type& type_a, const r::Type& type_b);
+   r::Type get_uptr_type() const noexcept;
 
    // llvm.cpp
    llvm::Function* get_llvm_function() const noexcept;

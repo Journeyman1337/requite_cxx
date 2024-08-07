@@ -511,14 +511,7 @@ r::Type Resolver::deduce_type(const r::Expression& expression, r::Builder* build
         }
         if (operation.opcode == r::Opcode::POINTER_DEPTH)
         {
-            r::Type type;
-            type.root =
-                r::Integer(
-                    r::IntegerType::UNSIGNED,
-                    this->get_pointer_bit_depth()
-                );
-            type.set_literal();
-            return type;
+            return this->get_uptr_type();
         }
         if (r::get_is_math_opcode(operation.opcode))
         {
@@ -622,6 +615,18 @@ r::Type Resolver::deduce_group_type(const r::Type& type_a, const r::Type& type_b
     }
     // TODO object types.
     throw std::runtime_error("no common type found.");
+}
+
+r::Type Resolver::get_uptr_type() const noexcept
+{
+    std::size_t pointer_depth = this->get_pointer_bit_depth();
+    return
+        r::Type(
+            r::Integer(
+                r::IntegerType::UNSIGNED,
+                pointer_depth
+            )
+        );
 }
 
 }
