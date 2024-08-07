@@ -16,13 +16,13 @@
 
 namespace r {
 
-llvm::Constant* Builder::generate_pointer_size_value_expression(const r::Operation& operation, const r::Type& expected_type)
+llvm::Constant* Builder::generate_pointer_depth_value_expression(const r::Operation& operation, const r::Type& expected_type)
 {
     assert(operation.opcode == r::Opcode::POINTER_SIZE);
     assert(operation.branches.empty());
     if (!expected_type.get_is_integer())
     {
-        throw std::runtime_error("pointer_size must be assigned to integer type.");
+        throw std::runtime_error("pointer_depth must be assigned to integer type.");
     }
     r::Integer expected_integer = std::get<r::Integer>(expected_type.root);
     std::size_t pointer_depth = this->resolver.get_pointer_bit_depth();

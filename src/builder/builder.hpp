@@ -327,8 +327,8 @@ private:
    void generate_memcpy_static(llvm::Value* llvm_source, llvm::Value* llvm_dest, std::size_t size);
    void generate_memcpy(llvm::Value* llvm_source, llvm::Value* llvm_dest, llvm::Value* llvm_size);
 
-   // pointer_size.cpp
-   llvm::Constant* generate_pointer_size_value_expression(const r::Operation& operation, const r::Type& expected_type);
+   // pointer_depth.cpp
+   llvm::Constant* generate_pointer_depth_value_expression(const r::Operation& operation, const r::Type& expected_type);
 };
 
 }

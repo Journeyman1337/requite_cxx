@@ -108,8 +108,8 @@ llvm::Value* Builder::generate_value_expression(const r::Expression& expression,
                 return this->generate_bitwise_or_value_expression(operation, expected_type);
             case r::Opcode::PIPE_EQUAL:
                 return this->generate_bitwise_or_assignment_value_expression(operation, expected_type);
-            case r::Opcode::POINTER_SIZE:
-                return this->generate_pointer_size_value_expression(operation, expected_type);
+            case r::Opcode::POINTER_DEPTH:
+                return this->generate_pointer_depth_value_expression(operation, expected_type);
             case r::Opcode::CAROT:
                 return this->generate_bitwise_xor_value_expression(operation, expected_type);
             case r::Opcode::CAROT_EQUAL:

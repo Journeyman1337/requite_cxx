@@ -509,7 +509,7 @@ r::Type Resolver::deduce_type(const r::Expression& expression, r::Builder* build
             assert(operation.branches.empty());
             return r::NULL_TYPE;
         }
-        if (operation.opcode == r::Opcode::POINTER_SIZE)
+        if (operation.opcode == r::Opcode::POINTER_DEPTH)
         {
             r::Type type;
             type.root =

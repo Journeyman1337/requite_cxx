@@ -181,8 +181,8 @@ std::string_view to_string(r::Opcode opcode)
             return "+";
         case r::Opcode::PLUS_EQUAL:
             return "+=";
-        case r::Opcode::POINTER_SIZE:
-            return "pointer_size";
+        case r::Opcode::POINTER_DEPTH:
+            return "pointer_depth";
         case r::Opcode::PROPERTY:
             return "property";
         case r::Opcode::QUESTION:
@@ -355,7 +355,7 @@ r::Opcode to_opcode(std::string_view str) {
             {"||", r::Opcode::PIPE_PIPE},
             {"+", r::Opcode::PLUS},
             {"+=", r::Opcode::PLUS_EQUAL},
-            {"pointer_size", r::Opcode::POINTER_SIZE},
+            {"pointer_depth", r::Opcode::POINTER_DEPTH},
             {"property", r::Opcode::PROPERTY},
             {"?", r::Opcode::QUESTION},
             {"return", r::Opcode::RETURN},

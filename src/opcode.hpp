@@ -93,7 +93,7 @@ enum class Opcode
     PIPE_PIPE,
     PLUS,
     PLUS_EQUAL,
-    POINTER_SIZE,
+    POINTER_DEPTH,
     PROPERTY,
     RETURN,
     QUESTION,

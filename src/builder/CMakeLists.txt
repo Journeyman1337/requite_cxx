@@ -40,7 +40,7 @@ target_sources(
         "mul.cpp"
         "null.cpp"
         "object.cpp"
-        "pointer_size.cpp"
+        "pointer_depth.cpp"
         "procedures.cpp"
         "rem.cpp"
         "sign.cpp"
