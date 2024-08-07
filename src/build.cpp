@@ -17,6 +17,8 @@ namespace r {
 void Compiler::build(const r::BuildCommand& build_command)
 {
     r::Binary binary;
+    r::initialize_llvm();
+    binary.initialize_llvm_context();
     binary.modules.reserve(build_command.source_files.size());
     for (const std::filesystem::path& source_file : build_command.source_files)
     {
@@ -64,8 +66,6 @@ void Compiler::build(const r::BuildCommand& build_command)
         module.resolve_type_aliases();
     }
     //binary.generate_mangled_symbol_names();
-    r::initialize_llvm();
-    binary.initialize_llvm_context();
     for (r::Module& module : binary.modules)
     {
         module.initialize_llvm_module();
