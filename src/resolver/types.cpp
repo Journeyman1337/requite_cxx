@@ -294,17 +294,19 @@ r::Type Resolver::resolve_type(const r::Expression& expression, bool can_fail)
                     r::IntegerType integer_type = r::to_integer_type(integer_type_text);
                     assert(integer_type != r::IntegerType::UNKNOWN);
                     const r::Expression& bit_depth_expression = operation.branches.back();
-                    assert(std::holds_alternative<r::Literal>(bit_depth_expression));
-                    r::Literal bit_depth_literal = std::get<r::Literal>(bit_depth_expression);
-                    std::uint64_t bit_depth = r::to_number(bit_depth_literal.text);
-                    if (!r::get_is_valid_integer_bit_depth(bit_depth))
+                    llvm::APInt llvm_ap_int = 
+                        this->get_integer_constant(
+                            bit_depth_expression,
+                            this->get_uptr_type()
+                        );
+                    if (!llvm_ap_int.isPowerOf2())
                     {
                         throw std::runtime_error("invalid integer bit depth.");
                     }
                     type.root =
                         r::Integer(
                             integer_type,
-                            bit_depth
+                            llvm_ap_int.getLimitedValue()
                         );
                 }
                 else if (operation.opcode == r::Opcode::BUILTIN_FLOATING_POINT)

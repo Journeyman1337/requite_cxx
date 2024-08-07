@@ -19,6 +19,7 @@
 #include <llvm/ADT/SmallVector.h>
 #include <llvm/ADT/StringMap.h>
 #include <llvm/ADT/DenseMap.h>
+#include <llvm/ADT/APSInt.h>
 
 #include <memory>
 #include <cstddef>
@@ -146,7 +147,7 @@ private:
 
    // constant.cpp
    llvm::Value* generate_primitive_literal(const r::Literal& literal, bool is_negative, const r::Type& expected_type);
-   llvm::ConstantInt* generate_integer_constant(const r::Expression& expression, const r::Type& expected_type);
+   llvm::ConstantInt* generate_integer_constant(llvm::APSInt llvm_ap_sint, const r::Type& type);
    llvm::GlobalVariable* generate_global_string(const r::Literal& literal);
 
    // sign.cpp
@@ -328,7 +329,7 @@ private:
    void generate_memcpy(llvm::Value* llvm_source, llvm::Value* llvm_dest, llvm::Value* llvm_size);
 
    // pointer_depth.cpp
-   llvm::Constant* generate_pointer_depth_value_expression(const r::Operation& operation, const r::Type& expected_type);
+   llvm::ConstantInt* generate_pointer_depth_value_expression(const r::Operation& operation, const r::Type& expected_type);
 };
 
 }

@@ -99,7 +99,8 @@ r::BreakType Builder::generate_case_statement(const r::Operation& operation, r::
     }
     this->push_scope();
     const r::Expression& case_value_expression = operation.branches.front();
-    llvm::ConstantInt* llvm_case_value = this->generate_integer_constant(case_value_expression, type);
+    llvm::APSInt llvm_aps_int = this->resolver.get_integer_constant(case_value_expression, type);
+    llvm::ConstantInt* llvm_case_value = this->generate_integer_constant(llvm_aps_int, type);
     this->set_current_block(llvm_case_block);
     llvm_switch->
         addCase(

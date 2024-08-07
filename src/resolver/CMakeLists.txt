@@ -5,6 +5,7 @@
 target_sources(
     requite
     PRIVATE
+        "constants.cpp"
         "llvm.cpp"
         "location.cpp"
         "symbols.cpp"

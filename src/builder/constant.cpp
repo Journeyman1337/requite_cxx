@@ -79,41 +79,27 @@ llvm::Value* Builder::generate_primitive_literal(const r::Literal& literal, bool
     r::unreachable();
 }
 
-llvm::ConstantInt* Builder::generate_integer_constant(const r::Expression& expression, const r::Type& type)
+llvm::ConstantInt* Builder::generate_integer_constant(llvm::APSInt llvm_ap_sint, const r::Type& type)
 {
     assert(type.get_is_integer());
-    const r::Expression* cur_expression = &expression;
-    bool is_negative = false;
-    while (std::holds_alternative<r::Operation>(*cur_expression))
+    r::Integer integer = type.get_integer();
+    if (
+        integer.bit_depth != llvm_ap_sint.getBitWidth()
+    )
     {
-        const r::Operation& cur_operation = std::get<r::Operation>(*cur_expression);
-        assert(cur_operation.branches.size() == 1UZ);
-        assert(cur_operation.opcode == r::Opcode::MINUS || cur_operation.opcode == r::Opcode::PLUS);
-        if (cur_operation.opcode == r::Opcode::MINUS)
-        {
-            is_negative = !is_negative;
-        }
-        cur_expression = &cur_operation.branches.front();
+        throw std::runtime_error("invalid constant integer bit depth.");
     }
-    assert(std::holds_alternative<r::Literal>(*cur_expression));
-    const r::Literal& literal = std::get<r::Literal>(*cur_expression);
-    assert(literal.type == r::LiteralType::NUMBER);
-    r::Integer integer = std::get<r::Integer>(type.root);
-    llvm::IntegerType* llvm_integer_type = this->resolver.get_llvm_type(integer);
-    llvm::APInt llvm_int =
-        llvm::APInt(
-            llvm_integer_type->getBitWidth(),
-            literal.text,
-            10
-        );
-    if (is_negative)
+    if (
+        type.get_is_unsigned_integer() &&
+        llvm_ap_sint.isSigned()
+    )
     {
-        llvm_int.flipAllBits();
+        throw std::runtime_error("invalid constant integer signedness.");
     }
     return
         llvm::ConstantInt::get(
             this->resolver.get_llvm_context(),
-            llvm_int
+            llvm_ap_sint
         );
 }
 

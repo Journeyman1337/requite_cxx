@@ -72,6 +72,7 @@ struct Type final
     void resolve_type_alias() noexcept;
 
     r::Object& get_object() noexcept;
+    const r::Integer& get_integer() const noexcept;
 
     bool get_is_llvm_value_type() const noexcept;
     bool get_is_llvm_store_type() const noexcept;

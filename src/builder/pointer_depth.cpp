@@ -16,18 +16,15 @@
 
 namespace r {
 
-llvm::Constant* Builder::generate_pointer_depth_value_expression(const r::Operation& operation, const r::Type& expected_type)
+llvm::ConstantInt* Builder::generate_pointer_depth_value_expression(const r::Operation& operation, const r::Type& expected_type)
 {
-    assert(operation.opcode == r::Opcode::POINTER_SIZE);
+    assert(operation.opcode == r::Opcode::POINTER_DEPTH);
     assert(operation.branches.empty());
-    if (!expected_type.get_is_integer())
-    {
-        throw std::runtime_error("pointer_depth must be assigned to integer type.");
-    }
-    r::Integer expected_integer = std::get<r::Integer>(expected_type.root);
     std::size_t pointer_depth = this->resolver.get_pointer_bit_depth();
+    r::Type uptr_type = this->resolver.get_uptr_type();
+    this->resolver.check_type_assignable_to_type(uptr_type, expected_type);
     llvm::APInt llvm_ap_int(
-        expected_integer.bit_depth,
+        pointer_depth,
         std::to_array({static_cast<std::uint64_t>(pointer_depth)})
     );
     return

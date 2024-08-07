@@ -10,6 +10,7 @@
 
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Type.h>
+#include <llvm/ADT/APSInt.h>
 
 #include <cstddef>
 #include <span>
@@ -52,6 +53,9 @@ struct Resolver final
    void enter(r::Procedure& procedure);
    void enter(r::TypeAlias& type_alias);
    void clear();
+
+   // constants.cpp
+   llvm::APSInt get_integer_constant(const r::Expression& expression, const r::Type& expected_type);
 
    // types.cpp
    bool get_is_type_assignable_to_type(const r::Type& from, const r::Type& to);

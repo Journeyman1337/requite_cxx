@@ -609,6 +609,12 @@ r::Object& Type::get_object() noexcept
     return *object_ptr;
 }
 
+const r::Integer& Type::get_integer() const noexcept
+{
+    assert(std::holds_alternative<r::Integer>(this->root));
+    return std::get<r::Integer>(this->root);
+}
+
 bool operator==(const r::Subtype& lhs, const r::Subtype& rhs) noexcept
 {
     return 
