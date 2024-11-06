@@ -1,8 +1,0 @@
-
-[ENTRY_POINT
-    [LOCAL a [SIGNED_INTEGER 32] 0]
-    [COPY a [ADD a 23]]
-    [LOCAL b [SIGNED_INTEGER 32] 100]
-    [COPY b [MULTIPLY a b]]
-    [RETURN b]
-]

@@ -11,12 +11,6 @@ project(requite)
 
 add_executable(requite "")
 
-target_include_directories(
-    requite
-    PRIVATE
-    "$CMAKE_CURRENT_SOURCE_DIR}/include"
-)
-
 add_subdirectory(src)
 
 

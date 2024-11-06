@@ -6,5 +6,4 @@ target_sources(
     requite
     PRIVATE
         "main.cpp"
-        "parse.cpp"
 )
