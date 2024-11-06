@@ -6,19 +6,23 @@ SPDX-License-Identifier: MIT
 
 # Requite
 
-__NOTICE: This repository contains a compiler front-end that is in the early stages of development. Its buggy, incomplete, and hard to work with. Use it at your own risk!__
+Requite is going to be a statically typed systems programming langauge with a homoiconic syntax. In this repository, I am experimenting with different compiler design techniques that I need to master before I can put it together.
 
-Requite is a statically typed systems programming langauge with a homoiconic syntax.
+## Prototype Versions
 
-# Stages
+My current goal is to experiment with compiler design. To do this, I am creating a number of prototypes. These prototypes follow the following rules:
 
-1. Read source files
-2. Parse abstract syntax tree for each file
-3. Catalogue types and functions (so there is no need for forward declarations later)
-4. Build ir with LLVM
-5. Output intermediate files with LLVM
-6. Compile with clang
+* Easy to debug - I am writting things in a way that are as easy as possible for me to examine using debugging tools.
+* Simplification - I am going to support as few language features as possible to make it faster to iterate.
+* No Optimizations - I am probably going to rewrite everything several times in the near future. There is no point in optimizing this early. "Premature optimization is the root of all evil." - Donald Knuth
 
-## Syntax Examples
+Here is a list of the prototypes
 
-Example files can be found in the test_sources folder. There are no command line options yet, and all configuration should be done by changing the C++ source code in <src/main.cpp>. When running the test source files, make sure that there is only one `entry_point` operation across all source files. Some files contain definitions used by other sources, so you need to compile them together. For further instructions, look at the <test_sources/test.bash> file.
+* Homotonic experiment (DONE) - Create a minimal compiler made using LLVM. This is in its own repository: [https://github.com/Journeyman1337/homoiconic_experiment](https://github.com/Journeyman1337/homoiconic_experiment).
+* Prototype 1 (DONE) - Generate LLVM IR and compile it. Experiment with different features of LLVM for IR generation. Look at version tag v0.0.1.0 of this repository.
+* Prototype 2 (WIP) - Experiment with LLVM static analysis tools.
+* Prototype 3 (NOT STARTED) - Create an internal representation of my compiled AST that is in SSA form and perform my own optimizations.
+* ???
+
+
+
