@@ -10,6 +10,9 @@ requite::Opcode get_opcode(std::string_view name)
 {
     if (name == "UNKNOWN") return requite::Opcode::UNKNOWN;
     else if (name == "ENTRY_POINT") return requite::Opcode::ENTRY_POINT;
+    else if (name == "FUNCTION") return requite::Opcode::FUNCTION;
+    else if (name == "CALL") return requite::Opcode::CALL;
+    else if (name == "EXTERNAL_FUNCTION") return requite::Opcode::EXTERNAL_FUNCTION;
     else if (name == "LOCAL") return requite::Opcode::LOCAL;
     else if (name == "SIGNED_INTEGER") return requite::Opcode::SIGNED_INTEGER;
     else if (name == "ADD") return requite::Opcode::ADD;
