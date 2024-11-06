@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <string_view>
-
 namespace requite {
 
 enum class Opcode
@@ -47,9 +45,4 @@ enum class Opcode
     LABEL
 };
 
-requite::Opcode get_opcode(std::string_view name);
-
 }
-
-#include <requite/ast/detail/opcode.inl>
-
