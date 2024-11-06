@@ -16,7 +16,14 @@ struct Expression;
 struct Operation final
 {
     requite::Opcode opcode = requite::Opcode::UNKNOWN;
-    std::vector<std::unique_ptr<requite::Expression>> expressions;
+    std::unique_ptr<std::vector<std::unique_ptr<requite::Expression>>> expressions_uptr =
+        std::make_unique<
+            std::vector<
+                std::unique_ptr<
+                    requite::Expression
+                >
+            >
+        >();
 };
 
 }

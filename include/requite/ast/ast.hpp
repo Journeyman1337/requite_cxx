@@ -6,6 +6,7 @@
 
 #include <requite/ast/expression.hpp>
 
+#include <string_view>
 #include <vector>
 
 namespace requite {
@@ -13,6 +14,9 @@ namespace requite {
 struct Ast final
 {
     std::vector<requite::Expression> expressions;
+
+    // parse.cpp
+    bool parse(std::string_view source);
 };
 
 }
