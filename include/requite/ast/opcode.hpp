@@ -13,9 +13,6 @@ enum class Opcode
     UNKNOWN,
 
     ENTRY_POINT,
-    FUNCTION,
-    CALL,
-    EXTERNAL_FUNCTION,
 
     LOCAL,
 
