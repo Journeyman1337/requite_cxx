@@ -1,0 +1,160 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+[module libc_math]
+
+[export_group c
+
+    [calling_convention C],
+    [external_function acos r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name acosf],
+    [external_function acos r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function asin r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name asinf],
+    [external_function asin r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function atan r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name atanf],
+    [external_function atan r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function atan2 r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name atan2f],
+    [external_function atan2 r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function cos r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name cosf],
+    [external_function cos r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function cosh r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name coshf],
+    [external_function cosh r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function sin r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name sinf],
+    [external_function sin r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function sinh r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name sinhf],
+    [external_function sinh r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function tanh r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name tanhf],
+    [external_function tanh r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function exp r:f64 [arguments r:f64 x]]
+    
+    [calling_convention C],
+    [mangled_name expf],
+    [external_function exp r:f32 [arguments r:f32 x]]
+    
+    [calling_convention C],
+    [external_function frexp r:f64 [arguments r:f64 x *r:i32 exponent]]
+
+    [calling_convention C],
+    [mangled_name frexpf],
+    [external_function frexp r:f32 [arguments r:f32 x *r:i32 exponent]]
+
+    [calling_convention C],
+    [external_function ldexp r:f64 [arguments r:f64 x *r:i32 exponent]]
+
+    [calling_convention C],
+    [mangled_name ldexpf],
+    [external_function ldexp r:f32 [arguments r:f32 x *r:i32 exponent]]
+
+    [calling_convention C],
+    [external_function log r:f64 [arguments r:f64 x]]
+
+    [calling_convention C],
+    [mangled_name logf],    
+    [external_function log r:f32 [arguments r:f32 x]]
+
+    [calling_convention C],
+    [external_function log10 r:f64 [arguments r:f64 x]]
+
+    [calling_convention C],
+    [mangled_name log10f],
+    [external_function log10 r:f32 [arguments r:f32 x]]
+
+    [calling_convention C],
+    [external_function modf r:f64 [arguments r:f64 fractional *r:f64 integer]]
+
+    [calling_convention C],
+    [mangled_name modff],    
+    [external_function modf r:f32 [arguments r:f32 fractional *r:f32 integer]]
+
+    [calling_convention C],
+    [external_function pow r:f64 [arguments r:f64 x r:f64 power]]
+    
+    [calling_convention C],
+    [mangled_name powf],
+    [external_function pow r:f32 [arguments r:f32 x r:f32 power]]
+
+    [calling_convention C],
+    [external_function sqrt r:f64 [arguments r:f64 x]]
+
+    [calling_convention C],
+    [mangled_name sqrtf],
+    [external_function sqrt r:f32 [arguments r:f32 x]]
+
+    [calling_convention C],
+    [external_function ceil r:f64 [arguments r:f64 x]]
+
+    [calling_convention C],
+    [mangled_name ceilf],
+    [external_function ceil r:f32 [arguments r:f32 x]]
+
+    [calling_convention C],
+    [external_function abs r:i32 [arguments r:i32 x]]
+
+    [calling_convention C],
+    [mangled_name fabs],
+    [external_function abs r:f64 [arguments r:f64 x]]
+
+    [calling_convention C],
+    [mangled_name fabsf],
+    [external_function abs r:f32 [arguments r:f32 x]]
+
+    [calling_convention C],
+    [external_function floor r:f64 [arguments r:f64 x]]
+
+    [calling_convention C],
+    [mangled_name floorf],
+    [external_function floor r:f32 [arguments r:f32 x]]
+
+    [calling_convention C],
+    [external_function fmod r:f64 [arguments r:f64 x r:f64 y]]
+    
+    [calling_convention C],
+    [mangled_name fmodf],
+    [external_function fmod r:f32 [arguments r:f32 x r:f32 y]]
+
+]

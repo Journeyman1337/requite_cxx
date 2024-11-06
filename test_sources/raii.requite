@@ -1,0 +1,33 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+[object TestObject
+    [property x r:i32 0]
+
+    [constructor [arguments r:i32 x]
+        [= [this].x x]
+        c:printf("constructed %d\n" [this].x)
+    ]
+
+    [destructor
+        c:printf("destructed %d\n" [this].x)
+    ]
+]
+
+[entry_point
+    [for [local x r:i32 0][< x 5][+= x 1]
+        [local object TestObject{1}]
+    ]    
+
+    [for [local x r:i32 0][< x 5][+= x 1]
+        [no_autodestruct],
+        [local object TestObject{2}]
+    ]    
+
+    [for [local x r:i32 0][< x 5][+= x 1]
+        [no_autodestruct],
+        [local object TestObject{3}]
+        [destruct object]
+    ]    
+]

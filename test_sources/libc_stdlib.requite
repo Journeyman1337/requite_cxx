@@ -1,0 +1,15 @@
+// SPDX-FileCopyrightText: 2024 Daniel Aimé Valcour <fosssweeper@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+[module libc_stdlib]
+
+[export_group c
+
+    [calling_convention C],
+    [external_function malloc *r:void [arguments r:uptr size]]
+
+    [calling_convention C],
+    [external_function free r:void [arguments *r:void ptr]]
+
+]
